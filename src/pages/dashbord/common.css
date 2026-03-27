@@ -1,0 +1,198 @@
+.mainContainer {
+  height: 100vh;
+  width: 88%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+}
+
+
+.logo {
+  position: absolute;
+  top: 30px;
+  font-size: 24px;
+  color: white;
+  font-weight: bold;
+}
+
+.authCard {
+
+  height: auto;
+  min-height: 370px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  width: 100%;
+  max-width: 350px;
+
+  padding: 25px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.topBtn {
+  position: relative;
+  width: 100%;
+  max-width: 200px;
+  height: 50px;
+  display: flex;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.topBtn button {
+  color: #000000;
+  flex: 1;
+  padding: 10px;
+  background: transparent;
+  border: none;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.slider {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  background: #00C2A8;
+  border-radius: 12px;
+  transition: 0.3s;
+  z-index: 1;
+}
+
+.slider.left {
+  left: 0;
+}
+
+.slider.right {
+  left: 50%;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+.txt{
+  font-size:x-large;
+  font-weight: 800;
+}
+.txt1{
+   font-size:large;
+  font-weight: 600;
+}
+.content {
+  height: 100%;
+  width: 90%;
+  align-items: center;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.mainBox {
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 280px;
+}
+
+.text {
+  margin-top: 5px;
+  height: 30px;
+  width: 100%;
+  border-radius: 10px;
+  border: none;
+  text-align: center;
+  font-weight: 700;
+  background-color: rgb(238, 243, 236);
+}
+
+.btns {
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
+  height: auto;
+  width: 100%;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.loginbtn,
+.forgetbtn,
+.signupbtn {
+  height: 40px;
+  min-width: 100px;
+  border-radius: 10px;
+  font-weight: 800;
+  color: #72ac74;
+  border: none;
+}
+
+/* BASE */
+.left {
+  gap: 30px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+@media (max-width: 480px) {
+
+  
+
+  .logo {
+    font-size: 20px;
+    top: 15px;
+  }
+  
+  .authCard {
+    padding: 20px;
+  }
+
+  .content {
+    flex-direction: column;
+    justify-content: space-evenly;
+   
+  }
+
+  .mainBox {
+    margin: 10px;
+  }
+
+  .text {
+    height: 35px;
+  }
+
+  .btns {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .loginbtn,
+  .forgetbtn,
+  .signupbtn {
+    width: 100%;
+    max-width: 250px;
+  }
+
+  .left {
+    flex-direction: row;
+    gap: 40px;
+  }
+}
+
+.topBtn button {
+  color: #000;
+}
+
+.topBtn button.active {
+  color: white; 
+}
