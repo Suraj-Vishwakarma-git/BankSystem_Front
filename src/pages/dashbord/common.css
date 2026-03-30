@@ -1,44 +1,105 @@
-.mainContainer {
+/* ─── Page Layout ─────────────────────────────────────────── */
+
+.page-wrapper {
   height: 100vh;
-  width: 88%; 
+  width: 88%;
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: "Poppins", sans-serif;
 }
 
-
-.logo {
-  position: absolute;
-  top: 30px;
-  font-size: 24px;
-  color: white;
-  font-weight: bold;
+.page-content {
+  height: 100%;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
-.authCard {
 
-  height: auto;
-  min-height: 370px;
+/* ─── Hero / Left Panel ────────────────────────────────────── */
+
+.hero-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.hero-text {
+  
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hero-title {
+  font-size: x-large;
+  font-weight: 800;
+  margin: 0;
+}
+
+.hero-subtitle {
+  font-size: large;
+  font-weight: 600;
+  margin: 0;
+}
+
+.hero-logo {
+  height: 100px;
+  will-change: transform;
+}
+
+
+/* ─── Auth Panel / Right ───────────────────────────────────── */
+
+.auth-panel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-card {
+  /* Fixed width — never changes between login and signup */
+  width: 370px;
+  /* Fixed height — absorbs the extra input row without resizing the card */
+  min-height: 420px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
-
-  width: 100%;
-  max-width: 350px;
-
-  padding: 25px;
+  padding: 28px 20px;
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.35s ease;
+  will-change: transform, opacity;
+  /* Clip any overflowing animated children */
+  overflow: hidden;
 }
 
-.topBtn {
+.auth-card:hover {
+  box-shadow: 0 12px 44px rgba(0, 0, 0, 0.38);
+}
+
+.auth-heading {
+  margin: 0 0 6px;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+
+/* ─── Tab Switcher ─────────────────────────────────────────── */
+
+.auth-tab-switcher {
   position: relative;
-  width: 100%;
-  max-width: 200px;
+  width: 200px;        /* fixed — don't let it stretch */
+  flex-shrink: 0;
   height: 50px;
   display: flex;
   background: rgba(0, 0, 0, 0.1);
@@ -46,153 +107,262 @@
   overflow: hidden;
 }
 
-.topBtn button {
-  color: #000000;
+.tab-btn {
   flex: 1;
   padding: 10px;
   background: transparent;
   border: none;
-  z-index: 2;
-  cursor: pointer;
-}
-
-.slider {
-  position: absolute;
-  width: 50%;
-  height: 100%;
-  background: #00C2A8;
-  border-radius: 12px;
-  transition: 0.3s;
-  z-index: 1;
-}
-
-.slider.left {
-  left: 0;
-}
-
-.slider.right {
-  left: 50%;
-}
-
-button:active {
-  transform: scale(0.95);
-}
-.txt{
-  font-size:x-large;
-  font-weight: 800;
-}
-.txt1{
-   font-size:large;
+  color: #000;
   font-weight: 600;
-}
-.content {
-  height: 100%;
-  width: 90%;
-  align-items: center;
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.28s ease;
 }
 
-.mainBox {
-  margin: 15px;
+.tab-btn--active {
+  color: #fff;
+}
+
+/* Pill is a Framer Motion element — keep this as GPU hint only */
+.tab-slider {
+  will-change: transform;
+}
+
+
+/* ─── Form Area ────────────────────────────────────────────── */
+
+.auth-form-area {
+  /* Fixed height — tall enough for signup (3 inputs + button).
+     Login (2 inputs + buttons) sits inside with extra breathing room.
+     This is the key fix: the card no longer resizes on tab switch. */
+  width: 100%;
+  height: 240px;
+  position: relative;
+  overflow: hidden;
+  margin-top: 40px;
+}
+
+/* The motion.div Framer wraps each form in gets this class.
+   It must fill the area AND centre its child form-group. */
+.form-motion-wrapper {
+  position: absolute;
+  inset: 0;                   /* top/right/bottom/left: 0 */
+  display: flex;
+  justify-content: center;    /* horizontal centre */
+  align-items: flex-start;    /* stick to top so stagger feels natural */
+  padding-top: 4px;
+}
+
+/* ─── Form Group ───────────────────────────────────────────── */
+
+.form-group {
+  /* Fixed width matching the inputs — no more right-drift */
+  width: 260px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 100%;
-  max-width: 280px;
 }
 
-.text {
-  margin-top: 5px;
-  height: 30px;
-  width: 100%;
+.form-input {
+  height: 38px;
+  width: 100%;               /* fills form-group exactly */
+  padding: 0 12px;
   border-radius: 10px;
   border: none;
   text-align: center;
-  font-weight: 700;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.88rem;
   background-color: rgb(238, 243, 236);
+  outline: none;
+  box-sizing: border-box;    /* padding included in 100% width */
+  transition: box-shadow 0.22s ease, background-color 0.22s ease;
+  will-change: transform;
 }
 
-.btns {
+.form-input:focus {
+  background-color: #fff;
+  box-shadow: 0 0 0 2.5px #00c2a8;
+}
+
+.form-actions {
+
   display: flex;
   margin-top: 20px;
   justify-content: center;
-  height: auto;
-  width: 100%;
   gap: 10px;
   flex-wrap: wrap;
 }
 
-.loginbtn,
-.forgetbtn,
-.signupbtn {
+.btn-primary {
   height: 40px;
   min-width: 100px;
   border-radius: 10px;
   font-weight: 800;
-  color: #72ac74;
+  font-family: "Poppins", sans-serif;
+  color: #6d6f6d;
+  background: #f3f3f3;
   border: none;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease;
+  will-change: transform;
 }
 
-/* BASE */
-.left {
-  gap: 30px;
+.btn-primary:hover {
+  box-shadow: 0 4px 14px rgba(38, 42, 41, 0.25);
+}
+
+.btn-ghost {
+  height: 40px;
+  min-width: 100px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-family: "Poppins", sans-serif;
+  background-color: #ededed;
+  color: #f45f5f;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  transition: color 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform;
+}
+
+.btn-ghost:hover {
+  color: #c03a3a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ─── Account Confirmation Modal ──────────────────────────── */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(251, 251, 251, 0.96);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.modal-card {
+  height: auto;
+  min-height: 300px;
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 10px;
+  padding: 25px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
+  will-change: transform, opacity;
+}
+
+.modal-brand {
+  font-size: xx-large;
+  font-weight: 800;
   display: flex;
   align-items: center;
+  gap: 10px;
   flex-direction: column;
 }
 
+.modal-logo {
+  height: 50px;
+  will-change: transform;
+}
+
+.modal-user-name,
+.modal-user-email {
+  background-color: #ebe9e9;
+  font-family: "Poppins", sans-serif;
+  width: 250px;
+  display: flex;
+  align-items: center;
+  color: #454545;
+  justify-content: center;
+  height: 35px;
+  border-radius: 10px;
+  font-size: medium;
+  font-weight: 500;
+}
+
+.modal-confirm-btn {
+  height: 40px;
+  min-width: 100px;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: large;
+  font-family: "Poppins", sans-serif;
+  color: #656565;
+  background: #f0f0f0;
+  border: none;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
+  will-change: transform;
+}
+
+.modal-confirm-btn:hover {
+  background-color: #e4e4e4;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.modal-warning {
+  font-style: italic;
+  color: red;
+  font-size: small;
+  margin: 0;
+}
+
+
+/* ─── Responsive ───────────────────────────────────────────── */
+
 @media (max-width: 480px) {
-
-  
-
-  .logo {
-    font-size: 20px;
-    top: 15px;
-  }
-  
-  .authCard {
-    padding: 20px;
+  .auth-card {
+    width: 100%;
+    max-width: 340px;
+    padding: 20px 14px;
   }
 
-  .content {
+  .page-content {
     flex-direction: column;
     justify-content: space-evenly;
-   
   }
 
-  .mainBox {
-    margin: 10px;
+  .form-group {
+    width: 230px;
   }
 
-  .text {
-    height: 35px;
-  }
-
-  .btns {
+  .form-actions {
     flex-direction: column;
     align-items: center;
   }
 
-  .loginbtn,
-  .forgetbtn,
-  .signupbtn {
+  .btn-primary,
+  .btn-ghost {
     width: 100%;
-    max-width: 250px;
+    max-width: 230px;
   }
 
-  .left {
+  .hero-panel {
     flex-direction: row;
     gap: 40px;
   }
 }
 
-.topBtn button {
-  color: #000;
-}
-
-.topBtn button.active {
-  color: white; 
+/* ─── Reduced-motion accessibility ────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

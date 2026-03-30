@@ -1,0 +1,303 @@
+/* =============================================
+   HOME PAGE — MODERN GLASS BANKING UI
+   Aesthetic: Refined dark luxury with glass morphism
+   Font: DM Sans (body) + Syne (display)
+============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap');
+
+/* ── CSS VARIABLES ─────────────────────────── */
+:root {
+  --bg-base:       #ffffff;
+  --bg-surface:    #ffffff;
+  --bg-card:       #ffffff;
+  --bg-card-hover: #f8faff;
+  --border-subtle: rgba(99, 130, 210, 0.12);
+  --border-accent: rgba(59, 130, 246, 0.35);
+
+  --accent-blue:   #3b82f6;
+  --accent-indigo: #6366f1;
+  --accent-cyan:   #22d3ee;
+  --accent-glow:   rgba(59, 130, 246, 0.20);
+
+  --text-primary:  #0f172a;
+  --text-secondary:#334155;
+  --text-muted:    #94a3b8;
+
+  --radius-sm:     10px;
+  --radius-md:     16px;
+  --radius-lg:     24px;
+  --radius-xl:     32px;
+
+  --shadow-card:   0 0 0 1px rgba(99, 130, 210, 0.08),
+                   0 20px 50px rgba(99, 130, 210, 0.12);
+  --shadow-glow:   0 0 40px rgba(59, 130, 246, 0.15);
+
+  --font-display:  'Syne', sans-serif;
+  --font-body:     'DM Sans', sans-serif;
+
+  --transition:    all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── RESET & BASE ──────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── PAGE CONTAINER ────────────────────────── */
+.homeContainer {
+  background: var(--bg-base);
+  min-height: 100vh;
+  width: 100vw;
+  font-family: var(--font-body);
+  color: var(--text-primary);
+}
+
+
+/* ── MAIN LAYOUT ───────────────────────────── */
+.mainBox {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 28px 48px;
+  display: flex;
+  flex-direction: row;
+  gap: 22px;
+  align-items: stretch;
+  justify-content: center;
+}
+
+/* ── SHARED CARD BASE ──────────────────────── */
+.transactionBox,
+.anotherBox {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+  padding: 28px;
+  animation: fadeUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── LEFT CARD — TRANSFER ──────────────────── */
+.transactionBox {
+  flex: 0 0 400px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  animation-delay: 0.05s;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle top accent stripe */
+.transactionBox::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 20%; right: 20%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.4), transparent);
+  border-radius: 0 0 2px 2px;
+}
+
+/* ── CARD TITLE ────────────────────────────── */
+.transferTitle {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.3px;
+  text-align: center;
+  padding-bottom: 6px;
+  position: relative;
+}
+
+.transferTitle::after {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+  border-radius: 2px;
+  margin: 8px auto 0;
+}
+
+/* ── OPTION CARDS ──────────────────────────── */
+.treeBoxes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.optionCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  background: #f8faff;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+
+.optionCard:hover {
+  background: #eef3ff;
+  border-color: var(--border-accent);
+  color: var(--text-primary);
+  transform: translateX(5px);
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.10);
+}
+
+
+.optionCard .icon {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: rgba(59, 130, 246, 0.1);
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.optionCard:hover .icon {
+  background: rgba(59, 130, 246, 0.18);
+  transform: scale(1.08);
+}
+
+/* ── CONTINUE BUTTON ───────────────────────── */
+.transferBtn {
+  margin-top: 4px;
+  padding: 15px;
+  border-radius: var(--radius-md);
+  border: none;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  width: 300px;
+  letter-spacing: 0.3px;
+  background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-indigo) 100%);
+  color: #fff;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+}
+.tbtn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.transferBtn:hover {
+  transform: translateY(-2px);
+  
+  box-shadow: 0 8px 30px rgba(59, 130, 246, 0.45);
+}
+
+
+.transferBtn:active {
+  transform: translateY(0);
+}
+
+/* ── RIGHT CARD — FEATURES ─────────────────── */
+.anotherBox {
+  flex: 0 0 400px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation-delay: 0.15s;
+}
+
+/* ── RIGHT CARD ITEMS ──────────────────────── */
+.cardItem {
+  padding: 20px 22px;
+  border-radius: var(--radius-md);
+  background: #f8faff;
+  border: 1px solid var(--border-subtle);
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.cardItem::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--accent-blue), var(--accent-indigo));
+  border-radius: 0 2px 2px 0;
+  opacity: 0;
+  transform: scaleY(0.3);
+  transition: var(--transition);
+}
+
+.cardItem:hover {
+  background: #eef3ff;
+  border-color: rgba(99, 130, 246, 0.25);
+  transform: translateX(4px);
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.08);
+}
+
+.cardItem:hover::before {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+.cardItem h3 {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: -0.1px;
+  transition: color 0.25s ease;
+}
+
+.cardItem:hover h3 {
+  color: var(--accent-blue);
+}
+
+/* ── RESPONSIVE ────────────────────────────── */
+@media (max-width: 768px) {
+  .mainBox {
+    flex-direction: column;
+    padding: 20px 16px 40px;
+    gap: 16px;
+  }
+
+  .transactionBox {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .anotherBox {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .transactionBox,
+  .anotherBox {
+    padding: 22px 18px;
+    border-radius: var(--radius-lg);
+  }
+
+  .transferTitle {
+    font-size: 18px;
+  }
+}

@@ -1,0 +1,83 @@
+
+.card {
+  width: 340px;
+  padding: 30px;
+  border-radius: 20px;
+  background: rgba(252, 250, 250, 0.1);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  color: #000000;
+  transition: 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Title */
+.title {
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+/* Inputs */
+.input {
+  background-color: #e1e1e1;
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  transition: 0.2s;
+  color: #2c2d2e;
+}
+
+.input:focus {
+  box-shadow: 0 0 0 2px #2c2d2e;
+}
+
+/* Button */
+.button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #656a6c, #5c6166);
+  color: #ffffff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.buttons{
+    width: 100%;
+    display: flex;
+    gap: 10px;
+
+}
+
+.button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(71, 74, 75, 0.4);
+}
+
+/* User Info */
+.userInfo {
+  margin-top: 20px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.userInfo h3 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.userInfo p {
+  margin: 6px 0;
+}
