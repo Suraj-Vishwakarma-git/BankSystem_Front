@@ -1,102 +1,193 @@
 import React, { useEffect, useState } from "react";
 import "./TransferMoney.css";
 import Header from "../../components/common/Header.jsx";
-
-const TransferMoney = () => {
+import { useLoading } from "../../context/LoadingContext";
+import History from "./History.jsx";
+const TransferMoney = ({ setNotification }) => {
+  const { setLoading } = useLoading();
 
   const [accounts, setAccounts] = useState([]);
   const [search, setSearch] = useState("");
   const [email, setEmail] = useState("");
+  const [amount, setAmount] = useState("");
+  const [pin, setPin] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [txnData, setTxnData] = useState(null);
 
-  // 🔹 Fetch default contacts
+  const API_URL = "http://localhost:3000";
+
+  // 🔹 Success Animation
+  const triggerSuccessAnimation = (data) => {
+    setTxnData(data);
+    setShowSuccess(true);
+
+    setTimeout(() => {
+      setShowSuccess(false);
+    }, 3000);
+  };
+
+  // 🔹 Fetch Contacts
   async function fetchContacts() {
+    setLoading(true);
     try {
-      const res = await fetch("http://localhost:3000/api/auth/allaccounts");
+      const res = await fetch(`${API_URL}/api/auth/allaccounts`);
       const data = await res.json();
-
       setAccounts(data?.users || []);
     } catch (err) {
-      console.error("Error fetching users:", err);
+      setNotification({ msg: "Failed to load contacts", type: "error" });
+    } finally {
+      setLoading(false);
     }
   }
 
-  // 🔹 Search and highlight user
+  // 🔹 Search
   async function handleSearch() {
-    if (!search.trim()) return;
+    if (!search.trim()) {
+      setNotification({ msg: "Enter something to search", type: "error" });
+      return;
+    }
+
+    setLoading(true);
 
     try {
       const res = await fetch(
-        `http://localhost:3000/api/auth/searchaccount?search=${encodeURIComponent(search)}`
+        `${API_URL}/api/auth/searchaccount?search=${encodeURIComponent(search)}`
       );
 
       const data = await res.json();
 
-      // ❗ Multiple users
       if (data.multiple) {
-        alert(data.message);
+        setNotification({ msg: data.message, type: "error" });
         return;
       }
 
-      // ❗ No user
       if (!data.user) {
-        alert("No user found");
+        setNotification({ msg: "No user found", type: "error" });
         return;
       }
 
-      // ✅ Select user
       setSelectedUser(data.user);
       setEmail(data.user.email);
 
-      // ✅ Add to list if not already present
-      const exists = accounts.some(acc => acc.id === data.user.id);
+      const exists = accounts.some((acc) => acc.id === data.user.id);
 
       if (!exists) {
-        setAccounts(prev => [data.user, ...prev]);
+        setAccounts((prev) => [data.user, ...prev]);
       }
 
-      // ✅ Scroll to selected user
       setTimeout(() => {
-        document.querySelector(".contact-pill.active")?.scrollIntoView({
-          behavior: "smooth",
-          inline: "center"
-        });
+        document
+          .querySelector(".contact-pill.active")
+          ?.scrollIntoView({
+            behavior: "smooth",
+            inline: "center",
+          });
       }, 100);
-
-    } catch (err) {
-      console.error("Search error:", err);
+    } catch {
+      setNotification({ msg: "Search failed", type: "error" });
+    } finally {
+      setLoading(false);
     }
   }
+
+  // 🔹 TRANSFER (FINAL)
+  const handleTransfer = async () => {
+    if (!selectedUser) {
+      setNotification({ msg: "Select a user first", type: "error" });
+      return;
+    }
+
+    if (!amount || amount <= 0) {
+      setNotification({ msg: "Enter valid amount", type: "error" });
+      return;
+    }
+
+    if (!pin || !/^\d{4}$/.test(pin)) {
+      setNotification({ msg: "Enter valid 4-digit PIN", type: "error" });
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const res = await fetch(`${API_URL}/api/account/transaction`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          toAccount: selectedUser.id,
+          amount: Number(amount),
+          PIN: pin,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setNotification({ msg: data.message, type: "error" });
+        return;
+      }
+
+      setNotification({ msg: "Payment Successful", type: "success" });
+
+      triggerSuccessAnimation(data);
+
+      setAmount("");
+      setPin("");
+    } catch {
+      setNotification({ msg: "Network error", type: "error" });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchContacts();
   }, []);
 
   return (
-    <div>
+    
+    <div >
       <Header />
+       <div className="MainTransactionFile">
+      
+
+      {/* SUCCESS ANIMATION */}
+      {showSuccess && (
+        <div className="success-overlay">
+          <div className="success-card">
+            <div className="checkmark">✔</div>
+            <h2>Payment Successful</h2>
+            <p className="amount">₹ {txnData?.amount}</p>
+           <p className="pytname" >To : {txnData?.to}</p>
+          </div>
+        </div>
+      )}
 
       <div className="transactionbox">
         <div className="transfer-card">
 
-          {/* HEADER */}
           <div className="card-header">
             <h2>Transfer Money</h2>
             <p>Select a contact or search user</p>
           </div>
 
-          {/* 🔍 SEARCH */}
+          {/* SEARCH */}
           <div className="search-box">
             <input
               type="text"
-              placeholder="Search user by name or email..."
               value={search}
+              className="searchBox"
               onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search user..."
             />
-            <button onClick={handleSearch}>Search</button>
+            <button onClick={handleSearch} className="searchUser" >Search</button>
           </div>
 
-          {/* 🔥 CONTACT SCROLL */}
+          {/* CONTACTS */}
           <div className="contacts-scroll">
             {accounts.map((user) => (
               <div
@@ -122,39 +213,49 @@ const TransferMoney = () => {
 
             {selectedUser && (
               <div className="selected-user">
-                Sending to: {selectedUser.name} ({selectedUser.email})
+                Sending to: {selectedUser.name}
               </div>
             )}
 
             <div className="input-group">
-              <label>Receiver Email</label>
+              <label>Email</label>
+              <div className="receiverMail">
+              <input type="text" value={email} className="readOnly" readOnly style={{cursor:"default"}} />
+              <button className="cancelEmail" onClick={()=>{setSelectedUser(null),setEmail("")}}>X</button>
+            </div>
+             </div>
+            <div className="input-group">
+              <label>Amount</label>
               <input
-                type="email"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  setSelectedUser(null);
-                }}
-                placeholder="example@gmail.com"
+                type="number"
+                value={amount}
+                placeholder="Amount"
+                onChange={(e) => setAmount(e.target.value)}
               />
             </div>
 
             <div className="input-group">
-              <label>Amount</label>
-              <input type="number" placeholder="₹ Enter amount" />
-            </div>
-
-            <div className="input-group">
               <label>PIN</label>
-              <input type="password" placeholder="••••" />
+              <input
+                type="password"
+                value={pin}
+                placeholder="PIN"
+                onChange={(e) => setPin(e.target.value)}
+              />
             </div>
 
-            <button className="send-btn">Proceed →</button>
+            <button className="send-btn" onClick={handleTransfer}>
+              Proceed →
+            </button>
 
           </div>
-
         </div>
       </div>
+
+      <div className="transactionHistoryBox">
+        <History setNotification={setNotification} />
+      </div>
+    </div>
     </div>
   );
 };

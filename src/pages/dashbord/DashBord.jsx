@@ -65,7 +65,7 @@ const Dashboard = ({ setNotification }) => {
   const navigate=useNavigate();
   const [isLoginView, setIsLoginView]           = useState(true);
   const [showAccountModal, setShowAccountModal] = useState(false);
-  const [name, setName]         = useState("");
+  const [name, setName]    = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail]       = useState("");
   const [newAccountName, setNewAccountName]     = useState("");

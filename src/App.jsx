@@ -26,7 +26,7 @@ function App() {
       <Routes>
         <Route path="/" element={<DashBord setNotification={setNotification} />} />
         <Route path="/home" element={<Home setNotification={setNotification} />} />
-        <Route path="/transfermoney" element={<TransferMoney/>}/>
+        <Route path="/transfermoney" element={<TransferMoney setNotification={setNotification}  />}/>
       </Routes>
     </BrowserRouter>
   );
