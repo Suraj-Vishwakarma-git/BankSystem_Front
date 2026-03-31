@@ -159,6 +159,27 @@
   font-weight: 500;
 }
 
+.AccBalance{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.toggle-btn{
+  height: 30px;
+  width: 60px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 10px;
+  background-color: #9badea;
+  color: rgb(255, 255, 255);
+  font-size: medium;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+
 /* OPTIONAL: smooth scroll look */
 .transactions-section::-webkit-scrollbar {
   width: 6px;

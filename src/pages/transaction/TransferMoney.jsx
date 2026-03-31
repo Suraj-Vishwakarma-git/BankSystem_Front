@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./TransferMoney.css";
 import Header from "../../components/common/Header.jsx";
 import { useLoading } from "../../context/LoadingContext";
+import logo from "./ApexTrust.png"
 import History from "./History.jsx";
 const TransferMoney = ({ setNotification }) => {
   const { setLoading } = useLoading();
@@ -157,15 +158,28 @@ const TransferMoney = ({ setNotification }) => {
 
       {/* SUCCESS ANIMATION */}
       {showSuccess && (
-        <div className="success-overlay">
-          <div className="success-card">
-            <div className="checkmark">✔</div>
-            <h2>Payment Successful</h2>
-            <p className="amount">₹ {txnData?.amount}</p>
-           <p className="pytname" >To : {txnData?.to}</p>
-          </div>
-        </div>
-      )}
+  <div className="success-overlay">
+    <div className="success-card-new">
+
+      <div className="success-icon">
+        ✔
+      </div>
+
+      <h2 className="success-title">
+        Payment Successful
+      </h2>
+
+      <div className="bank-info">
+        <img src={logo} alt="bank" className="bank-logo" />
+        <p>{txnData?.to}</p>
+      </div>
+
+      <p className="balance-label">Amount Sent</p>
+      <h1 className="success-amount">₹ {txnData?.amount}</h1>
+
+    </div>
+  </div>
+)}
 
       <div className="transactionbox">
         <div className="transfer-card">

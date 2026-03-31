@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import "./History.css";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const History = ({ setNotification }) => {
-  const [showBalance,setShowBalance]=useState(true);
+  const [showBalance,setShowBalance]=useState(false);
   const [PIN, setPIN] = useState("");
   const [balance, setBalance] = useState(null);
   const [history, setHistory] = useState([]);
@@ -38,6 +37,7 @@ const History = ({ setNotification }) => {
     }
   }
 
+
 return (
   <div className="history-container">
 
@@ -58,10 +58,12 @@ return (
       {balance !== null && (
         <div className="balance-card">
           <p>Total Balance</p>
-          <button className="toggle-btn" onClick={()=>setShowBalance(!showBalance)}>
-            {showBalance ? <Visibility /> : <VisibilityOff />}
+          <div className="AccBalance">
+          <h1>₹ {showBalance?balance.toLocaleString():"****"}</h1>
+           <button className="toggle-btn" onClick={()=>setShowBalance(!showBalance)}>
+            {showBalance ? "Hide" : "Show"}
           </button>
-          <h1>₹ {balance.toLocaleString()}</h1>
+          </div>
         </div>
       )}
     </div>
