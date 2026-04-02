@@ -152,7 +152,7 @@ const Home = ({ setNotification }) => {
               <div className="acctChipVal">{accno}</div>
             </div>
           </div>
-     <div className="graphdetalis">
+     
           <div className="stripDivider" />
 
           <div className="stripStat">
@@ -173,8 +173,6 @@ const Home = ({ setNotification }) => {
           <div className="stripAction" onClick={() => setrevealBalance(!revealBalance)}>
             Reveal Balance
           </div>
-          </div>
-         
         </div>
 
         {/* SCROLLABLE CONTENT */}
