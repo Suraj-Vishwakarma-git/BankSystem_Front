@@ -137,13 +137,13 @@ const TransferMoney = ({ setNotification }) => {
       triggerSuccessAnimation(data);
 
       setAmount("");
-      setPin("");
     } catch {
       setNotification({ msg: "Network error", type: "error" });
     } finally {
       setLoading(false);
     }
   };
+
 
   useEffect(() => {
     fetchContacts();

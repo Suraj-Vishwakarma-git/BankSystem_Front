@@ -59,20 +59,7 @@ const AccBalance = ({setbalanceModel}) => {
           </div>
         )}
          
-      </div>
-
-      {history.length > 0 && (
-        <div className="history">
-          <h3>Recent Transactions</h3>
-          {history.map((tx, index) => (
-            <div key={index} className="tx">
-              <p>{tx.type}</p>
-              <p>₹ {tx.amount}</p>
-            </div>
-          ))}
-        </div>
-      )}
-     
+      </div>   
     </div>
   );
 };
