@@ -4,6 +4,8 @@ import "./Home.css";
 import AccBalance from './transaction/AccBalance.jsx';
 import Header from './common/Header.jsx';
 import Pin from './transaction/Pin.jsx';
+import Graph from "./Graph.jsx";
+import { useLoading } from "../context/LoadingContext";
 
 const Home = ({ setNotification }) => {
 
@@ -14,16 +16,19 @@ const Home = ({ setNotification }) => {
   const [pinModel, setPinModel] = useState(false);
   const [activeNav, setActiveNav] = useState('dashboard');
 
+  const [authPIN,setauthPIN]=useState("");
+  const [isAuthorized,setisAuthorized]=useState(false);
   const [accno,setaccNo]=useState("");
   const [accBalance,setaccBalance]=useState("");
   const [sendMoney,setsendMoney]=useState("");
   const [receivedMoney,setreceivedMoney]=useState("");
   const [revealBalance,setrevealBalance]=useState(false);
-
+ const {setLoading}=useLoading();
   const [graphdata,setgraphdata]=useState(null);
 
   function handleLogout() {
     localStorage.removeItem("token");
+    sessionStorage.clear();
     navigate("/");
   }
 
@@ -36,7 +41,37 @@ const Home = ({ setNotification }) => {
     }
   }
 
+async function authentification() {
+  setLoading(true);
+  const token = localStorage.getItem("token");
+
+  const res = await fetch("http://localhost:3000/api/auth/securetransaction", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ PIN: authPIN })
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    setLoading(false);
+    setNotification({ msg: data.message, type: "error" });
+    setisAuthorized(false);
+    return;
+  }
+
+  // ✅ Mark user as verified (temporary)
+  sessionStorage.setItem("pinVerified", "true");
+  setLoading(false);
+  setisAuthorized(false);
+  navigate("/transfermoney");
+}
+
   async function accData(){
+    setLoading(true);
     const token=localStorage.getItem("token");
     const API=await fetch("http://localhost:3000/api/account/accdata",{
       method:"GET",
@@ -46,6 +81,7 @@ const Home = ({ setNotification }) => {
       }
     });
     if(!API.ok){
+      setLoading(false);
       return setNotification({msg:"Error",type:"error"})
     }
     const data=await API.json();
@@ -56,6 +92,7 @@ const Home = ({ setNotification }) => {
     setreceivedMoney(data.creditAmt);
     console.log(data);
 
+    setLoading(false); // ✅ always safe
   }
   useEffect(()=>{
     accData()
@@ -176,8 +213,10 @@ const Home = ({ setNotification }) => {
         </div>
 
         {/* SCROLLABLE CONTENT */}
+  
         <div className="contentScroll">
-
+           <div className="graphandaccstatus">
+            <div className="balance">
           {/* STATS ROW */}
            <div className="statCard">
           <div className="statLabel">Sent</div>
@@ -199,6 +238,14 @@ const Home = ({ setNotification }) => {
     >
       {receivedMoney > sendMoney ? "High Income" : "Low Income"}
     </span>
+  </div>
+  </div>
+  <div className="graph">
+    <h1>
+      <Graph  totalBalance={accBalance} spentAmount={sendMoney} />
+    </h1>
+  </div>
+
   </div>
 
           {/* MAIN BOX — unchanged classNames */}
@@ -224,11 +271,41 @@ const Home = ({ setNotification }) => {
               </div>
 
               <div className="tbtn">
-                <Link to="/transfermoney">
-                  <button className="transferBtn">Continue</button>
-                </Link>
+                
+                  <button className="transferBtn" onClick={() => {setisAuthorized(true)}} >Continue</button>
+        
+                
               </div>
             </div>
+
+
+           {
+  isAuthorized && (
+    <div className="authorization">
+      <div className="auth-card">
+        
+        <p className="auth-title">Enter PIN</p>
+        <p className="auth-sub">Secure your transaction</p>
+
+        <input
+          type="password"
+          maxLength={4}
+          placeholder="••••"
+          className="pin-input"
+          onChange={(e) => setauthPIN(e.target.value)}
+        />
+
+        <button className="process-btn" onClick={authentification}>
+          Proceed
+        </button>
+        <button className="cancle-btn" onClick={()=>setisAuthorized(false)}>
+          Cancle
+        </button>
+
+      </div>
+    </div>
+  )
+}
 
             {/* RIGHT CARD */}
             <div className="anotherBox">
@@ -250,7 +327,9 @@ const Home = ({ setNotification }) => {
                 <h3>Change Account PIN</h3>
               </div>
 
-              <div className="cardItem checkBalance" onClick={() => setbalanceModel(true)}>
+              <div className="cardItem checkBalance" >
+                
+                
                 <h3>Check Account Balance</h3>
               </div>
             </div>

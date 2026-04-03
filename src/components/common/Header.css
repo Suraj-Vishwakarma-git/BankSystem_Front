@@ -60,6 +60,7 @@
   border: 1.5px solid rgba(59, 130, 246, 0.2);
 }
 
+
 /* ── USERNAME ──────────────────────────────── */
 .username {
   font-family: 'DM Sans', sans-serif;
@@ -89,7 +90,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-
+  height: fit-content;
   z-index: 1000;
   animation: fadeIn 0.25s ease-in-out;
 }
@@ -131,6 +132,12 @@
 /* Email */
 .Aemail {
   font-size: 14px;
+  color: #777;
+  word-break: break-all;
+}
+
+.AaccNo{
+   font-size: 14px;
   color: #777;
   word-break: break-all;
 }

@@ -6,12 +6,14 @@ import { useLoading } from '../../context/LoadingContext.jsx';
 const Header = ({setispinExits}) => {
   
   const [name,setName]=useState("");
+  const [accNo,setaccNo]=useState("");
   const [email,setEmail]=useState("");
   const [profileModel,setprofileModel]=useState(false);
  
     const navigate = useNavigate();
   function handleLogout(){
     localStorage.removeItem("token");
+    sessionStorage.clear();
     navigate("/");
   }
   const {setLoading}=useLoading();
@@ -26,12 +28,15 @@ const Header = ({setispinExits}) => {
          Authorization:`Bearer ${token}`
          }
     })
-    setLoading(false);
+    
     const data=await API.json();
+     console.log(data);
+    setaccNo(data.userAccount.accountNumber);
     setName(data.userAccount.name);
     setEmail(data.email);
     if (data.userAccount.transactionPin && typeof setispinExits === "function") {
   setispinExits(true);
+  setLoading(false);
 }
   }
 
@@ -47,6 +52,7 @@ const Header = ({setispinExits}) => {
             <div className="Alogo"></div>
             <div className="Aname">{name}</div>
             <div className="Aemail">{email}</div>
+            <div className="AaccNo">{accNo}</div>
             <div className="btnss">
             <div className="logoutbtn" onClick={handleLogout}>Logout</div>
             <div className="cancle" onClick={()=>setprofileModel(false)}>Cancel</div>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./TransferMoney.css";
+import { useNavigate } from "react-router-dom";
 import Header from "../../components/common/Header.jsx";
 import { useLoading } from "../../context/LoadingContext";
 import logo from "./ApexTrust.png"
@@ -7,6 +8,7 @@ import History from "./History.jsx";
 const TransferMoney = ({ setNotification }) => {
   const { setLoading } = useLoading();
 
+  const navigate=useNavigate();
   const [accounts, setAccounts] = useState([]);
   const [search, setSearch] = useState("");
   const [email, setEmail] = useState("");
@@ -15,6 +17,14 @@ const TransferMoney = ({ setNotification }) => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [showSuccess, setShowSuccess] = useState(false);
   const [txnData, setTxnData] = useState(null);
+
+  useEffect(()=>{
+    const isVerified=sessionStorage.getItem("pinVerified");
+    if(!isVerified){
+      setNotification({msg:"Not Authorized User",type:"error"})
+      navigate("/Home");
+    }
+  },[])
 
   const API_URL = "http://localhost:3000";
 

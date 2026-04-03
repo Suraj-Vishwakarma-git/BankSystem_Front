@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./History.css";
 
 const History = ({ setNotification }) => {
   const [showBalance,setShowBalance]=useState(false);
-  const [PIN, setPIN] = useState("");
   const [balance, setBalance] = useState(null);
   const [history, setHistory] = useState([]);
 
@@ -19,7 +18,7 @@ const History = ({ setNotification }) => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ PIN }),
+         
         }
       );
 
@@ -37,6 +36,10 @@ const History = ({ setNotification }) => {
     }
   }
 
+  useEffect(()=>{
+    FetchBalance()
+  },[])
+
 
 return (
   <div className="history-container">
@@ -45,7 +48,7 @@ return (
     <div className="history-header">
       <h2>Account Overview</h2>
 
-      <div className="pin-row">
+      {/* <div className="pin-row">
         <input
           type="password"
           placeholder="Enter PIN"
@@ -53,7 +56,7 @@ return (
           onChange={(e) => setPIN(e.target.value)}
         />
         <button onClick={FetchBalance}>Check</button>
-      </div>
+      </div> */}
 
       {balance !== null && (
         <div className="balance-card">
@@ -72,14 +75,14 @@ return (
     <div className="transactions-section">
 
       {/* 👇 Show message if PIN not entered */}
-      {!PIN && (
+      {/* {!PIN && (
         <div className="empty-state">
           Enter PIN to check history
         </div>
-      )}
+      )} */}
 
       {/* 👇 Show transactions only if available */}
-      {PIN && history.length > 0 && (
+      { history.length > 0 && (
         <>
           <h3>Recent Transactions</h3>
 
