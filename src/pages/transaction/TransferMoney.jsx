@@ -8,6 +8,7 @@ import History from "./History.jsx";
 const TransferMoney = ({ setNotification }) => {
   const { setLoading } = useLoading();
 
+  const [refresh, setRefresh] = useState(false);
   const navigate=useNavigate();
   const [accounts, setAccounts] = useState([]);
   const [search, setSearch] = useState("");
@@ -141,9 +142,9 @@ const TransferMoney = ({ setNotification }) => {
         setNotification({ msg: data.message, type: "error" });
         return;
       }
-
+      setRefresh(true);
       setNotification({ msg: "Payment Successful", type: "success" });
-
+       
       triggerSuccessAnimation(data);
 
       setAmount("");
@@ -193,11 +194,13 @@ const TransferMoney = ({ setNotification }) => {
 
       <div className="transactionbox">
         <div className="transfer-card">
-
           <div className="card-header">
             <h2>Transfer Money</h2>
             <p>Select a contact or search user</p>
+            
           </div>
+          
+      
 
           {/* SEARCH */}
           <div className="search-box">
@@ -276,8 +279,8 @@ const TransferMoney = ({ setNotification }) => {
         </div>
       </div>
 
-      <div className="transactionHistoryBox">
-        <History setNotification={setNotification} />
+      <div className="transactionHistoryBox"  >
+        <History setNotification={setNotification}  refresh={refresh} setRefresh={setRefresh} />
       </div>
     </div>
     </div>

@@ -1,44 +1,46 @@
+/* ================= MAIN WRAPPER (IMPORTANT) ================= */
+.transactionHistoryBox {
+  width: 90%;
+  height: 80vh;              /* 🔥 FIXED HEIGHT REQUIRED */
+  display: flex;
+  flex-direction: column;
+
+  padding: 15px;
+  border-radius: 12px;
+
+  background: #f5f5f5;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+/* ================= HISTORY CONTAINER ================= */
 .history-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  height: 100%;              /* 🔥 MUST */
+  gap: 15px;
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
+.history-header {
+  flex-shrink: 0;
+}
+
 .history-header h2 {
   margin: 0;
 }
 
-/* PIN INPUT */
-.pin-row {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.pin-row input {
-  flex: 1;
-  padding: 8px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
-
-.pin-row button {
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: none;
-  background: #4f46e5;
-  color: white;
-  cursor: pointer;
-}
-
-/* BALANCE CARD */
+/* ================= BALANCE CARD ================= */
 .balance-card {
-  margin-top: 15px;
+  margin-top: 10px;
   padding: 15px;
   border-radius: 12px;
+
   background: linear-gradient(135deg, #4f46e5, #6366f1);
   color: white;
+
+  position: sticky;          /* 🔥 STAYS FIXED */
+  top: 0;
+  z-index: 10;
 }
 
 .balance-card p {
@@ -50,13 +52,57 @@
   margin: 5px 0 0;
 }
 
-/* TRANSACTIONS */
+/* BALANCE ROW */
+.AccBalance {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* BUTTON */
+.toggle-btn {
+  height: 32px;
+  width: 65px;
+
+  border: none;
+  border-radius: 8px;
+
+  background-color: #a5b4fc;
+  color: white;
+
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ================= SCROLL AREA ================= */
+.transactions-section {
+  flex: 1;
+  overflow-y: auto;
+
+  margin-top: 10px;
+  padding-right: 5px;
+
+  min-height: 0;              /* 🔥 CRITICAL (fixes PC bug) */
+}
+
+/* SCROLLBAR */
+.transactions-section::-webkit-scrollbar {
+  width: 6px;
+}
+
+.transactions-section::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+/* ================= TRANSACTIONS ================= */
 .transactions {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
+/* CARD */
 .transaction-card {
   display: flex;
   justify-content: space-between;
@@ -64,9 +110,10 @@
 
   padding: 12px;
   border-radius: 12px;
-  background: white;
 
+  background: white;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+
   transition: 0.2s;
 }
 
@@ -81,6 +128,7 @@
   gap: 10px;
 }
 
+/* ICON */
 .tx-icon {
   width: 35px;
   height: 35px;
@@ -103,6 +151,7 @@
   color: green;
 }
 
+/* TEXT */
 .tx-title {
   margin: 0;
   font-weight: 600;
@@ -127,27 +176,7 @@
   color: green;
 }
 
-/* CONTAINER */
-.history-container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-/* HEADER (FIXED AREA) */
-.history-header {
-  flex-shrink: 0;
-}
-
-/* SCROLL AREA ONLY */
-.transactions-section {
-  flex: 1;
-  overflow-y: auto;
-  margin-top: 10px;
-  padding-right: 5px;
-}
-
-/* EMPTY STATE */
+/* ================= EMPTY STATE ================= */
 .empty-state {
   height: 100%;
   display: flex;
@@ -159,33 +188,18 @@
   font-weight: 500;
 }
 
-.AccBalance{
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+  .transactionHistoryBox {
+    width: 100%;
+    height: 400px;      /* controlled height */
+  }
 
-.toggle-btn{
-  height: 30px;
-  width: 60px;
-  margin-right: 10px;
-  border: none;
-  border-radius: 10px;
-  background-color: #9badea;
-  color: rgb(255, 255, 255);
-  font-size: medium;
-  font-weight: 800;
-  cursor: pointer;
-}
+  .history-container {
+    height: 100%;
+  }
 
-
-/* OPTIONAL: smooth scroll look */
-.transactions-section::-webkit-scrollbar {
-  width: 6px;
-}
-
-.transactions-section::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 10px;
+  .transactions-section {
+    min-height: 0;
+  }
 }

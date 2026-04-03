@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./History.css";
 
-const History = ({ setNotification }) => {
+const History = ({ setNotification ,refresh,setRefresh}) => {
   const [showBalance,setShowBalance]=useState(false);
   const [balance, setBalance] = useState(null);
   const [history, setHistory] = useState([]);
@@ -9,7 +9,6 @@ const History = ({ setNotification }) => {
   async function FetchBalance() {
     try {
       const token = localStorage.getItem("token");
-
       const res = await fetch(
         "http://localhost:3000/api/account/fetchbalance",
         {
@@ -36,8 +35,16 @@ const History = ({ setNotification }) => {
     }
   }
 
+ useEffect(() => {
+  if (refresh) {
+    FetchBalance();
+    setRefresh(false);
+  }
+}, [refresh]);
+
   useEffect(()=>{
-    FetchBalance()
+    FetchBalance();
+
   },[])
 
 

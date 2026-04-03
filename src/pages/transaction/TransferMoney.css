@@ -1,418 +1,866 @@
-/* MAIN LAYOUT */
-.MainTransactionFile{
-  display: flex;
-  height: 90vh;
+/* ============================================================
+   TransferMoney.css — UPI-style Banking UI (Light Theme)
+   Font: Sora (headings) + DM Sans (body)
+   Palette: Clean white, soft greys, vivid indigo accent
+   ============================================================ */
 
-  align-items: center;
-  justify-content: center;
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap');
 
-  gap: 60px;
-
-  max-width: 1200px;
-  margin: 0 auto;
+/* ── Root Tokens ─────────────────────────────────────────── */
+:root {
+  --bg:           #f2f4f8;
+  --surface:      #ffffff;
+  --surface-2:    #f7f8fc;
+  --border:       #e4e8f0;
+  --accent:       #4f5ff0;
+  --accent-soft:  rgba(79,95,240,0.09);
+  --accent-glow:  rgba(79,95,240,0.22);
+  --green:        #16a34a;
+  --green-soft:   #dcfce7;
+  --red:          #dc2626;
+  --red-soft:     #fee2e2;
+  --text-1:       #111827;
+  --text-2:       #6b7280;
+  --text-3:       #9ca3af;
+  --radius-sm:    10px;
+  --radius-md:    14px;
+  --radius-lg:    20px;
+  --radius-xl:    24px;
+  --shadow-card:  0 2px 16px rgba(0,0,0,0.07);
+  --shadow-lift:  0 6px 24px rgba(0,0,0,0.10);
+  --font-head:    'Sora', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
 }
 
-/* LEFT SIDE (TRANSFER CARD WRAPPER) */
-.transactionbox{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* RIGHT SIDE (HISTORY PANEL) */
-.transactionHistoryBox{
-  width: 420px;
-  height: 80vh;
-  overflow-y: auto;
-
-  padding: 15px;
-  border-radius: 12px;
-
-  background: #f5f5f5;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-}
-
-
-/* ================= TRANSFER CARD ================= */
-
-.transfer-card {
-  width: 350px;
-  padding: 25px;
-  border-radius: 18px;
-  background-color: rgb(77, 77, 77);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-  color: rgb(243, 237, 237);
-  font-family: 'Inter', sans-serif;
-}
-
-/* HEADER */
-.card-header h2 {
+/* ── Base ────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
   margin: 0;
-  font-size: 22px;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text-1);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Main Layout ─────────────────────────────────────────── */
+.MainTransactionFile {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  grid-template-areas: "transfer history";
+  align-items: stretch;
+  gap: 20px;
+  padding: 24px 28px;
+  min-height: calc(100vh - 64px);
+  background: var(--bg);
+}
+
+/* ── Transfer Box ────────────────────────────────────────── */
+.transactionbox {
+  grid-area: transfer;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── History Box ─────────────────────────────────────────── */
+.transactionHistoryBox {
+  grid-area: history;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 22px 20px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ── Transfer Card ───────────────────────────────────────── */
+.transfer-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+/* ── Card Header ─────────────────────────────────────────── */
+.card-header {
+  padding: 22px 22px 18px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #eef0fe 0%, #f7f8ff 100%);
+}
+
+.card-header h2 {
+  font-family: var(--font-head);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.3px;
 }
 
 .card-header p {
   font-size: 13px;
-  color: #aaa;
-  margin-bottom: 20px;
+  color: var(--text-2);
+  margin-top: 3px;
 }
 
-/* SEARCH */
-.search-box{
+/* ── Card Body ───────────────────────────────────────────── */
+.card-body {
+  padding: 20px 22px 22px;
   display: flex;
-  align-items: center;
-  height: 30px;
-  width: 100%;
-  margin-bottom: 20px;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
 }
 
-.searchBox{
-  height: 30px;
-  width: 200px;
-  border-radius: 10px;
+/* ── Search Box ──────────────────────────────────────────── */
+.search-box {
+  display: flex;
+  gap: 8px;
+  padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.searchBox {
+  flex: 1;
+  min-width: 0;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-1);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.searchBox::placeholder { color: var(--text-3); }
+
+.searchBox:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.searchUser {
+  padding: 10px 18px;
+  background: var(--accent);
+  color: #fff;
   border: none;
-  text-align: center;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
 }
 
-.searchUser{
-  height: 30px;
-  width: 60px;
-  margin-left: 10px;
-  border-radius: 10px;
-  border: none;
-}
+.searchUser:hover  { background: #3d4de0; box-shadow: 0 4px 14px var(--accent-glow); }
+.searchUser:active { transform: scale(0.97); }
 
-/* CONTACTS */
+/* ── Contacts Scroll ─────────────────────────────────────── */
 .contacts-scroll {
   display: flex;
-  gap: 12px;
+  gap: 10px;
+  padding: 14px 22px;
   overflow-x: auto;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
+
+.contacts-scroll::-webkit-scrollbar { display: none; }
 
 .contact-pill {
-  min-width: 70px;
-  padding: 10px;
-  border-radius: 14px;
-  background: #1e1e2f;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
   cursor: pointer;
-  transition: 0.3s;
+  flex-shrink: 0;
+  transition: transform 0.18s;
 }
 
-.contact-pill:hover {
-  transform: translateY(-3px);
-  background: #2a2a40;
+.contact-pill:hover { transform: translateY(-2px); }
+
+.contact-pill p {
+  font-size: 11px;
+  color: var(--text-2);
+  font-weight: 500;
+  width: 52px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color 0.18s;
 }
 
-.contact-pill.active {
-  background: linear-gradient(135deg, #4f46e5, #6366f1);
+.contact-pill.active p {
+  color: var(--accent);
+  font-weight: 600;
 }
 
 .avatar {
-  width: 40px;
-  height: 40px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
-  background: #2f2f45;
+  background: var(--surface-2);
+  border: 2px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 6px;
-  font-weight: bold;
+  font-family: var(--font-head);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-2);
+  transition: border-color 0.18s, background 0.18s, color 0.18s, box-shadow 0.18s;
 }
 
-.contact-pill p {
-  font-size: 12px;
-  margin: 0;
+.contact-pill.active .avatar {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft);
 }
 
-/* FORM */
-.card-body {
+/* ── Selected User Banner ────────────────────────────────── */
+.selected-user {
+  background: var(--accent-soft);
+  border: 1px solid rgba(79,95,240,0.2);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
   display: flex;
-  flex-direction: column;
-  gap: 15px;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
+.selected-user::before {
+  content: '→';
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+/* ── Input Groups ────────────────────────────────────────── */
 .input-group {
   display: flex;
   flex-direction: column;
+  gap: 6px;
 }
 
 .input-group label {
-  font-size: 12px;
-  margin-bottom: 5px;
-  color: #ccc;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-2);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
 }
 
 .input-group input {
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-  outline: none;
-  background: #1e1e2f;
-  color: white;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-family: var(--font-body);
   font-size: 14px;
+  color: var(--text-1);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
 }
+
+.input-group input::placeholder { color: var(--text-3); }
 
 .input-group input:focus {
-  border: 1px solid #4f46e5;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
-/* EMAIL ROW */
-.receiverMail{
-  width: 100%;
+/* ── Receiver Mail Row ───────────────────────────────────── */
+.receiverMail {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-width: 0;            /* allow the row to shrink */
+  overflow: hidden;
+}
+
+/* KEY FIX: readOnly input truncates long emails */
+.readOnly {
+  flex: 1;
+  min-width: 0;            /* let input shrink below its content */
+  cursor: default !important;
+  color: var(--text-2) !important;
+  background: #f0f1f7 !important;
+  border-color: var(--border) !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cancelEmail {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--red-soft);
+  border: 1px solid rgba(220,38,38,0.18);
+  color: var(--red);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-shrink: 0;          /* never squash the × button */
+  transition: background 0.18s, transform 0.1s;
 }
 
-.readOnly{
-  width: 80%;
+.cancelEmail:hover {
+  background: #fecaca;
+  transform: scale(1.08);
 }
 
-.cancelEmail{
-  margin-left: 20px;
-  height: 35px;
-  width: 35px;
-  border: none;
-  border-radius: 10px;
-  background-color: red;
-  color: white;
-  font-size: larger;
-  font-weight: 800;
-  cursor: pointer;
-}
-
-/* BUTTON */
+/* ── Send Button ─────────────────────────────────────────── */
 .send-btn {
-  margin-top: 10px;
-  padding: 12px;
-  border-radius: 10px;
+  margin-top: 4px;
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--accent) 0%, #6c5df7 100%);
   border: none;
-  background: linear-gradient(135deg, #4f46e5, #6366f1);
-  color: white;
-  font-weight: 600;
+  border-radius: var(--radius-md);
+  font-family: var(--font-head);
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
   cursor: pointer;
-  transition: 0.3s;
+  letter-spacing: 0.2px;
+  box-shadow: 0 4px 18px var(--accent-glow);
+  transition: opacity 0.2s, box-shadow 0.2s, transform 0.1s;
 }
 
-.send-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(79,70,229,0.4);
-}
+.send-btn:hover  { opacity: 0.9; box-shadow: 0 8px 24px var(--accent-glow); }
+.send-btn:active { transform: scale(0.98); }
 
-
-/* ================= SUCCESS MODAL ================= */
-/* DARK BACKGROUND LIKE HDFC */
+/* ── Success Overlay ─────────────────────────────────────── */
 .success-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
+  background: rgba(0,0,0,0.42);
+  backdrop-filter: blur(5px);
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 99999;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px); /* for Safari */
-
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.22s ease;
+  padding: 16px;
 }
 
-/* NEW CARD */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
 .success-card-new {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  border-radius: 50px;
-  background: #1e1b2e;
-  height: 50%;
-  max-height: 350px;
-  width: 90%;
-  max-width: 350px;
+  background: #ffffff;
+  border-radius: var(--radius-xl);
+  padding: 36px 28px;
   text-align: center;
-  color: white;
-  animation: fadeIn 0.4s ease;
-}
-
-/* GREEN CHECK */
-.success-icon {
-  width: 90px;
-  height: 90px;
-  margin: 0 auto 20px;
-  border-radius: 50%;
-  background: #22c55e;
+  width: 100%;
+  max-width: 310px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: 45px;
-  animation: pop 0.4s ease;
-}
-
-/* TITLE */
-.success-title {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 20px;
-}
-
-/* BANK ROW */
-.bank-info {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   gap: 10px;
-  margin-bottom: 10px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+  animation: scaleIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
 }
 
-.bank-logo {
-  border:none;
-  border-radius:10px;
-  width: 50px;
-  height: 30px;
-  object-fit: contain;
+@keyframes scaleIn {
+  from { transform: scale(0.82); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
 }
 
-/* LABEL */
-.balance-label {
-  font-size: 13px;
-  color: #aaa;
+.success-icon {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: #dcfce7;
+  border: 2px solid #bbf7d0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: var(--green);
+  animation: pulse 0.55s ease 0.15s both;
 }
 
-/* BIG AMOUNT */
-.success-amount {
-  font-size: 32px;
-  font-weight: 700;
-  margin-top: 5px;
-}
-
-/* ANIMATIONS */
-@keyframes pop {
-  from {
-    transform: scale(0.5);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* ANIMATIONS */
-@keyframes pop {
-  from {
-    transform: scale(0.6);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes scaleUp {
-  0% { transform: scale(0); }
-  80% { transform: scale(1.2); }
+@keyframes pulse {
+  0%   { transform: scale(0.7); }
+  65%  { transform: scale(1.12); }
   100% { transform: scale(1); }
 }
 
-/* ================= MOBILE FIX ================= */
+.success-title {
+  font-family: var(--font-head);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text-1);
+}
 
-@media (max-width: 768px) {
+.bank-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  width: 100%;
+  justify-content: center;
+  overflow: hidden;
+}
 
-  /* MAIN LAYOUT FIX */
-  .MainTransactionFile{
-    flex-direction: column;
-    height: auto;
-    padding: 10px;
-    gap: 20px;
+.bank-info p {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bank-logo {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.balance-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--text-2);
+  margin-top: 6px;
+}
+
+.success-amount {
+  font-family: var(--font-head);
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--green);
+  letter-spacing: -1px;
+  word-break: break-all;   /* handle huge amounts */
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/*  HISTORY PANEL                                              */
+/* ─────────────────────────────────────────────────────────── */
+
+.history-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 0;
+  min-height: 0;
+}
+
+/* ── History Header ──────────────────────────────────────── */
+.history-header {
+  flex-shrink: 0;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.history-header h2 {
+  font-family: var(--font-head);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.2px;
+}
+
+/* ── Balance Card ────────────────────────────────────────── */
+.balance-card {
+  margin-top: 14px;
+  padding: 16px 18px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, #4f5ff0 0%, #6c5df7 100%);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(79,95,240,0.28);
+}
+
+.balance-card::before {
+  content: '';
+  position: absolute;
+  top: -28px;
+  right: -28px;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  pointer-events: none;
+}
+
+.AccBalance {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.balance-card p {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+}
+
+.balance-card h1 {
+  margin-top: 4px;
+  font-family: var(--font-head);
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -1px;
+  word-break: break-all;   /* handle very large balance numbers */
+}
+
+/* ── Toggle Button ───────────────────────────────────────── */
+.toggle-btn {
+  height: 30px;
+  min-width: 40px;
+  padding: 0 10px;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.18s;
+}
+
+.toggle-btn:hover { background: rgba(255,255,255,0.25); }
+
+/* ── PIN Row ─────────────────────────────────────────────── */
+.pin-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.pin-row input {
+  flex: 1;
+  min-width: 0;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-1);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.pin-row input::placeholder { color: var(--text-3); }
+
+.pin-row input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.pin-row button {
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: var(--accent);
+  color: white;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.18s, box-shadow 0.18s;
+}
+
+.pin-row button:hover {
+  background: #3d4de0;
+  box-shadow: 0 4px 14px var(--accent-glow);
+}
+
+/* ── Transactions Section ────────────────────────────────── */
+.transactions-section {
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 14px;
+  padding-right: 4px;
+  min-height: 0;           /* KEY: allow this to shrink so parent card doesn't balloon */
+  -webkit-overflow-scrolling: touch;
+}
+
+.transactions-section::-webkit-scrollbar { width: 4px; }
+.transactions-section::-webkit-scrollbar-track { background: transparent; }
+.transactions-section::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+/* ── Date Group Label ────────────────────────────────────── */
+.tx-date-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--text-3);
+  padding: 12px 0 6px;
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
+}
+
+.tx-date-label:first-child {
+  border-top: none;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+/* ── Transactions List ───────────────────────────────────── */
+.transactions {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* ── Transaction Card ────────────────────────────────────── */
+.transaction-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 10px;
+  border-radius: var(--radius-md);
+  background: transparent;
+  border: 1px solid transparent;
+  transition: background 0.15s, border-color 0.15s, transform 0.15s;
+  cursor: pointer;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.transaction-card:hover {
+  background: var(--surface-2);
+  border-color: var(--border);
+  transform: translateX(2px);
+}
+
+.transaction-card + .transaction-card {
+  border-top: 1px solid var(--border);
+  border-radius: 0;
+}
+
+.transaction-card + .transaction-card:hover {
+  border-radius: var(--radius-md);
+  border-top-color: transparent;
+  margin-top: -1px;
+}
+
+/* ── TX Left ─────────────────────────────────────────────── */
+.tx-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;            /* shrinks so amount side is never squeezed */
+  flex: 1;
+  overflow: hidden;
+}
+
+.tx-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.tx-icon.debit  { background: var(--red-soft);  color: var(--red);   border: 1px solid rgba(220,38,38,0.18); }
+.tx-icon.credit { background: var(--green-soft); color: var(--green); border: 1px solid rgba(22,163,74,0.18); }
+
+.tx-info {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Truncates long names/emails — adapts to container width, no fixed max-width */
+.tx-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tx-sub {
+  margin: 2px 0 0;
+  font-size: 11px;
+  color: var(--text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── TX Right ────────────────────────────────────────────── */
+.tx-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  flex-shrink: 0;          /* amount side NEVER shrinks */
+  margin-left: 10px;
+}
+
+/* Amount is always fully shown, never wraps */
+.tx-amount {
+  font-family: var(--font-head);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  white-space: nowrap;
+}
+
+.debit-text  { color: var(--red);   }
+.credit-text { color: var(--green); }
+
+.tx-time {
+  font-size: 10px;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+
+.tx-status {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.tx-status.success { color: var(--green); }
+.tx-status.failed  { color: var(--red);   }
+.tx-status.pending { color: #d97706;      }
+
+/* ── Empty State ─────────────────────────────────────────── */
+.empty-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--text-3);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 36px 0;
+  text-align: center;
+}
+
+.empty-state::before {
+  content: '📭';
+  font-size: 34px;
+  filter: grayscale(1) opacity(0.4);
+}
+
+/* ── Responsive: Tablet ──────────────────────────────────── */
+@media (max-width: 860px) {
+  .MainTransactionFile {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "transfer"
+      "history";
+    align-items: start;
+    padding: 14px 14px 24px;
+    gap: 16px;
   }
 
-  /* REMOVE CENTER LOCK */
-  .transactionbox{
-    width: 100%;
+  .transactionbox {
+    display: block;        /* natural height on mobile */
   }
 
-  /* HISTORY FULL WIDTH */
-  .transactionHistoryBox{
-    width: 100%;
-    
-    height: auto;
-    max-height: 400px;
+  .transfer-card {
+    flex: none;
   }
 
-  /* CARD FULL WIDTH */
-  .transfer-card{
-    width: 100%;
-    padding: 20px;
+  .transactionHistoryBox {
+    height: 65vh;
+    min-height: 340px;
+  }
+}
+
+/* ── Responsive: Small Phone ─────────────────────────────── */
+@media (max-width: 420px) {
+  .MainTransactionFile {
+    padding: 10px 10px 20px;
+    gap: 12px;
   }
 
-  /* SEARCH FIX */
-  .search-box{
-    flex-direction: column;
-    height: auto;
-    gap: 10px;
+  .card-header,
+  .card-body {
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
-  .searchBox{
-    width: 100%;
-    height: 40px;
+  .search-box,
+  .contacts-scroll {
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
-  .searchUser{
-    width: 100%;
-    height: 40px;
-    margin-left: 0;
+  .transactionHistoryBox {
+    padding: 16px 14px;
+    height: 60vh;
   }
 
-  /* CONTACT SCROLL SMOOTH */
-  .contacts-scroll{
-    gap: 10px;
+  .balance-card h1 {
+    font-size: 22px;
   }
 
-  .contact-pill{
-    min-width: 60px;
-    padding: 8px;
+  .tx-amount {
+    font-size: 13px;
   }
 
-  /* INPUT FIX */
-  .input-group input{
-    width: 100%;
-    font-size: 16px; /* prevents zoom on iPhone */
+  .success-card-new {
+    padding: 28px 20px;
   }
 
-  /* EMAIL ROW FIX */
-  .readOnly{
-    width: 100%;
-  }
-
-  .receiverMail{
-    gap: 10px;
-  }
-
-  .cancelEmail{
-    margin-left: 0;
-    flex-shrink: 0;
-  }
-
-  /* BUTTON FIX */
-  .send-btn{
-    width: 100%;
-    padding: 14px;
-    font-size: 16px;
-  }
-
-  /* SUCCESS MODAL */
-  .success-card{
-    width: 90%;
-    max-width: 280px;
-    padding: 20px;
+  .success-amount {
+    font-size: 28px;
   }
 }
