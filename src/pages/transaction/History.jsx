@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "./History.css";
+import { useLoading } from "../../context/LoadingContext";
+
 
 const History = ({ setNotification ,refresh,setRefresh}) => {
   const [showBalance,setShowBalance]=useState(false);
   const [balance, setBalance] = useState(null);
   const [history, setHistory] = useState([]);
-
+  const {setLoading}=useLoading();
+ 
   async function FetchBalance() {
+    setLoading(true);
     try {
       const token = localStorage.getItem("token");
       const res = await fetch(
@@ -32,6 +36,8 @@ const History = ({ setNotification ,refresh,setRefresh}) => {
       setHistory(data.History);
     } catch {
       setNotification({ msg: "Something went wrong", type: "error" });
+    }finally{
+      setLoading(false);
     }
   }
 

@@ -25,7 +25,12 @@ const Home = ({ setNotification }) => {
   const [revealBalance,setrevealBalance]=useState(false);
  const {setLoading}=useLoading();
   const [graphdata,setgraphdata]=useState(null);
+ const [gold, setGold] = useState(null);
+  const [silver, setSilver] = useState(null);
 
+  useEffect(() => {
+    fetchPrices();
+  }, []);
   function handleLogout() {
     localStorage.removeItem("token");
     sessionStorage.clear();
@@ -40,6 +45,22 @@ const Home = ({ setNotification }) => {
       });
     }
   }
+  async function fetchPrices() {
+    try {
+      const goldRes = await fetch("https://api.gold-api.com/price/XAU");
+      const goldData = await goldRes.json();
+
+      const silverRes = await fetch("https://api.gold-api.com/price/XAG");
+      const silverData = await silverRes.json();
+
+      setGold(goldData.price);
+      setSilver(silverData.price);
+
+    } catch (e) {
+      console.log("API Error:", e);
+    }
+  }
+
 
 async function authentification() {
   setLoading(true);
@@ -322,15 +343,15 @@ async function authentification() {
               <div className="cardItem" onClick={() => { setPinModel(true); check(); }}>
                 <h3>Set Account PIN</h3>
               </div>
-
+              <Link className='Link' to="/changepin">
               <div className="cardItem changepin">
                 <h3>Change Account PIN</h3>
               </div>
-
+              </Link>
               <div className="cardItem checkBalance" >
                 
                 
-                <h3>Check Account Balance</h3>
+                <h3>Stock Market</h3>
               </div>
             </div>
 

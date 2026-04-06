@@ -19,26 +19,37 @@ const Header = ({setispinExits}) => {
   const {setLoading}=useLoading();
 
 
-  async function accDetails(){
-    setLoading(true);
-    const token=localStorage.getItem("token");
-    const API=await fetch("http://localhost:3000/api/auth/accdetails",{
-         method: "POST",
-         headers: { "Content-Type": "application/json",
-         Authorization:`Bearer ${token}`
-         }
-    })
-    
-    const data=await API.json();
-     console.log(data);
+ async function accDetails() {
+  setLoading(true);
+
+  try {
+    const token = localStorage.getItem("token");
+
+    const API = await fetch("http://localhost:3000/api/auth/accdetails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await API.json();
+    console.log(data);
+
     setaccNo(data.userAccount.accountNumber);
     setName(data.userAccount.name);
     setEmail(data.email);
+
     if (data.userAccount.transactionPin && typeof setispinExits === "function") {
-  setispinExits(true);
-  setLoading(false);
-}
+      setispinExits(true);
+    }
+
+  } catch (error) {
+    console.log("Error:", error);
+  } finally {
+    setLoading(false);   // ✅ ALWAYS runs
   }
+}
 
   useEffect(()=>{
     accDetails();

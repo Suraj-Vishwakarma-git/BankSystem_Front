@@ -5,7 +5,9 @@ import DashBord from './pages/dashbord/DashBord.jsx';
 import Notification from './components/common/Notification.jsx';
 import  TransferMoney from "./pages/transaction/TransferMoney";
 import Home from './components/Home.jsx';
+import TransactionHistry from './pages/transaction/TransactionHistry.jsx';
 import { useLoading } from './context/LoadingContext.jsx';
+import ChangeAccPIN from './pages/transaction/ChangeAccPIN.jsx';
 function App() {
   const [notification,setNotification]=useState(null);
   const { loading} = useLoading();
@@ -27,6 +29,8 @@ function App() {
         <Route path="/" element={<DashBord setNotification={setNotification} />} />
         <Route path="/home" element={<Home setNotification={setNotification} />} />
         <Route path="/transfermoney" element={<TransferMoney setNotification={setNotification}  />}/>
+        <Route path="/transactionhistory" element={<TransactionHistry/>}/>
+        <Route path='/changepin' element={< ChangeAccPIN setNotification={setNotification}  />} />
       </Routes>
     </BrowserRouter>
   );
