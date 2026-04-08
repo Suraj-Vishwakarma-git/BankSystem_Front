@@ -1,6 +1,6 @@
 /* Page */
 .page {
-  min-height: 100vh;
+  min-height: 80vh;
   background: #f5f6fa;
   display: flex;
   align-items: center;
@@ -70,7 +70,7 @@
     width:50px;
     border-radius: 10px;
     cursor: pointer;
-    background-color: #ee7e7e;
+    background-color: #dedede;
 }
 
 /* Focus */

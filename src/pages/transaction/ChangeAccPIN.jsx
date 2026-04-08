@@ -2,18 +2,22 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import "./ChangePIN.css";
-import Header from "../../components/common/Header";
+import { useLoading } from "../../context/LoadingContext.jsx";
+import Header from "../../components/common/Header.jsx";
 
-export default function ChangePinUI({ setNotification, setLoading }) {
+export default function ChangePinUI({ setNotification }) {
   const [oldPIN, setOldPIN] = useState("");
   const [newPIN, setNewPIN] = useState("");
   const [confirmPIN, setConfirmPIN] = useState("");
 
+  const { setLoading } = useLoading(); // ✅ only from context
   const navigate = useNavigate();
 
-  const isValid = newPIN === confirmPIN && newPIN.length === 4;
+  const isValid =
+    newPIN === confirmPIN &&
+    newPIN.length === 4 &&
+    oldPIN.length === 4;
 
-  // ✅ renamed function (important)
   async function handleChangePIN() {
     try {
       setLoading(true);
@@ -25,7 +29,7 @@ export default function ChangePinUI({ setNotification, setLoading }) {
         {
           method: "POST",
           headers: {
-            "Content-type": "application/json",
+            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
@@ -46,13 +50,12 @@ export default function ChangePinUI({ setNotification, setLoading }) {
         type: "success",
       });
 
+      // reset fields
       setOldPIN("");
       setNewPIN("");
       setConfirmPIN("");
 
-      // ✅ OPTIONAL: redirect after success
       navigate("/home");
-
     } catch (err) {
       setNotification({
         msg: err.message,
@@ -66,15 +69,6 @@ export default function ChangePinUI({ setNotification, setLoading }) {
   return (
     <div className="mainn">
       <Header />
-
-      {/* ✅ HOME BUTTON FIX */}
-      <button
-        onClick={() => navigate("/home")}
-        className="btn_Home"
-        style={{ width: "120px", margin: "10px" }}
-      >
-        Home
-      </button>
 
       <div className="page">
         <motion.div
@@ -92,9 +86,10 @@ export default function ChangePinUI({ setNotification, setLoading }) {
                 type="password"
                 maxLength={4}
                 inputMode="numeric"
-                placeholder="••••"
                 value={oldPIN}
-                onChange={(e) => setOldPIN(e.target.value)}
+                onChange={(e) =>
+                  setOldPIN(e.target.value.replace(/\D/g, ""))
+                }
                 className="input"
               />
             </div>
@@ -105,9 +100,10 @@ export default function ChangePinUI({ setNotification, setLoading }) {
                 type="password"
                 maxLength={4}
                 inputMode="numeric"
-                placeholder="••••"
                 value={newPIN}
-                onChange={(e) => setNewPIN(e.target.value)}
+                onChange={(e) =>
+                  setNewPIN(e.target.value.replace(/\D/g, ""))
+                }
                 className="input"
               />
             </div>
@@ -118,9 +114,10 @@ export default function ChangePinUI({ setNotification, setLoading }) {
                 type="password"
                 maxLength={4}
                 inputMode="numeric"
-                placeholder="••••"
                 value={confirmPIN}
-                onChange={(e) => setConfirmPIN(e.target.value)}
+                onChange={(e) =>
+                  setConfirmPIN(e.target.value.replace(/\D/g, ""))
+                }
                 className="input"
               />
             </div>
@@ -133,6 +130,14 @@ export default function ChangePinUI({ setNotification, setLoading }) {
               className="btn"
             >
               Update PIN
+            </button>
+
+            <button
+              onClick={() => navigate("/home")}
+              className="btn_Home"
+              style={{ width: "120px", margin: "10px" }}
+            >
+              Home
             </button>
           </div>
 
