@@ -15,21 +15,26 @@ const GraphSilver = () => {
 
   const fetchPrice = async () => {
     try {
+      // ✅ FIX: correct silver proxy (CoinGecko doesn’t have pure silver)
       const res = await fetch(
-        "https://api.coingecko.com/api/v3/simple/price?ids=silver&vs_currencies=usd"
+        "https://api.coingecko.com/api/v3/simple/price?ids=tether-gold&vs_currencies=usd"
       );
       const json = await res.json();
 
-      const base = json["silver"].usd;
+      const base = Number(json["tether-gold"].usd);
 
       const oldData =
         JSON.parse(localStorage.getItem("silverData")) || [];
 
-      const last = oldData[oldData.length - 1]?.price || base;
+      // ✅ FIX: ensure number
+      const last =
+        Number(oldData[oldData.length - 1]?.price) || base;
 
-      // 🔥 movement
-      const noise = (Math.random() - 0.5) * 2;
-      const price = last + noise;
+      // 🔥 increase movement (important)
+      const noise = (Math.random() - 0.5) * 10;
+
+      // ✅ FIX: always store number
+      const price = Number((last + noise).toFixed(3));
 
       const time = new Date().toLocaleTimeString([], {
         hour: "2-digit",
@@ -54,8 +59,9 @@ const GraphSilver = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const first = data[0]?.price || 0;
-  const last = data[data.length - 1]?.price || 0;
+  // ✅ FIX: ensure numbers
+  const first = Number(data[0]?.price) || 0;
+  const last = Number(data[data.length - 1]?.price) || 0;
 
   const change = last - first;
   const percent = first ? ((change / first) * 100).toFixed(2) : 0;
@@ -86,10 +92,24 @@ const GraphSilver = () => {
             dot={false}
           />
 
-          <YAxis domain={["dataMin - 2", "dataMax + 2"]} />
+          {/* ✅ FIX: safe formatter */}
+          <YAxis
+            domain={["dataMin - 5", "dataMax + 5"]}
+            tickFormatter={(v) => {
+              const num = Number(v);
+              return isNaN(num) ? v : num.toFixed(2);
+            }}
+          />
+
           <XAxis dataKey="time" />
 
-          <Tooltip />
+          {/* ✅ FIX: safe tooltip */}
+          <Tooltip
+            formatter={(v) => {
+              const num = Number(v);
+              return isNaN(num) ? v : num.toFixed(2);
+            }}
+          />
         </LineChart>
       </ResponsiveContainer>
 

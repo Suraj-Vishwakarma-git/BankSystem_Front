@@ -20,22 +20,25 @@ const Graph2 = () => {
       );
       const json = await res.json();
       const base = json["tether-gold"].usd;
-      const oldData = JSON.parse(localStorage.getItem("goldData")) || [];
-      const last = oldData[oldData.length - 1]?.price || base;
 
-      // 🔥 small realistic movement
+      const oldData = JSON.parse(localStorage.getItem("goldData")) || [];
+
+      // 🔥 FIX: convert old price to number
+      const last = Number(oldData[oldData.length - 1]?.price) || base;
+
       const noise = (Math.random() - 0.5) * 20;
-      const price = last + noise;
+
+      // 🔥 FIX: always store number
+      const price = Number((last + noise).toFixed(3));
 
       const time = new Date().toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit"
-});
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+      });
 
       const newData = [...oldData, { time, price }];
 
-      // keep only last ~50 points (1 day feel)
       const trimmed = newData.slice(-50);
 
       localStorage.setItem("goldData", JSON.stringify(trimmed));
@@ -52,8 +55,9 @@ const Graph2 = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const first = data[0]?.price || 0;
-  const last = data[data.length - 1]?.price || 0;
+  // 🔥 FIX: ensure numbers here too
+  const first = Number(data[0]?.price) || 0;
+  const last = Number(data[data.length - 1]?.price) || 0;
 
   const change = last - first;
   const percent = first ? ((change / first) * 100).toFixed(2) : 0;
@@ -84,11 +88,20 @@ const Graph2 = () => {
             dot={false}
           />
 
-          {/* 🔥 still important */}
-          <YAxis domain={["dataMin - 10", "dataMax + 10"]} />
+          {/* 🔥 optional but good */}
+          <YAxis
+            domain={["dataMin - 10", "dataMax + 10"]}
+            tickFormatter={(v) => v.toFixed(3)}
+          />
+
           <XAxis dataKey="time" />
 
-          <Tooltip />
+          <Tooltip
+  formatter={(v) => {
+    const num = Number(v);
+    return isNaN(num) ? v : num.toFixed(3);
+  }}
+/>
         </LineChart>
       </ResponsiveContainer>
 
