@@ -4,8 +4,9 @@ import "./Home.css";
 import AccBalance from './transaction/AccBalance.jsx';
 import Header from './common/Header.jsx';
 import Pin from './transaction/Pin.jsx';
-import Graph from "./Graph.jsx";
+import Graph from "./Graph2.jsx";
 import { useLoading } from "../context/LoadingContext";
+import GraphSilver from './GraphSilver.jsx';
 
 const Home = ({ setNotification }) => {
 
@@ -262,9 +263,16 @@ async function authentification() {
   </div>
   </div>
   <div className="graph">
-    <h1>
-      <Graph  totalBalance={accBalance} spentAmount={sendMoney} />
-    </h1>
+        <div className="GoldGraph">
+      <h2>Gold</h2><br></br>
+      <Graph/>
+      
+      </div>
+      
+      <div className="SilverGraph">
+      <h2>Silver</h2><br></br>
+      <GraphSilver/>
+  </div>
   </div>
 
   </div>

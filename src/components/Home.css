@@ -712,6 +712,43 @@
   margin: 0;
 }
 
+/* ===== GRAPH WRAPPER ===== */
+.graph {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  align-items: stretch;
+}
+
+/* ===== INDIVIDUAL GRAPH ===== */
+.GoldGraph,
+.SilverGraph {
+  flex: 1;                 /* equal width */
+  min-width: 0;           /* prevents overflow */
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+/* ===== TABLET ===== */
+@media (max-width: 768px) {
+  .graph {
+    gap: 12px;
+  }
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 600px) {
+  .graph {
+    flex-direction: column;   /* stack vertically */
+  }
+
+  .GoldGraph,
+  .SilverGraph {
+    width: 100%;
+  }
+}
 /* ── Stat cards inside graphandaccstatus ── */
 .graphandaccstatus .statCard {
   flex: unset;
@@ -747,6 +784,7 @@
   .graphandaccstatus .graph {
     width: 100%;
   }
+ 
 }
 
 @media (max-width: 480px) {
@@ -754,8 +792,6 @@
     flex: 1 1 100%;
   }
 }
-
-
 
 /* 🔐 FULL SCREEN OVERLAY */
 .authorization {
@@ -880,6 +916,10 @@
     width: 90%;
     padding: 22px;
   }
+  
+
+
+
 }
 
 .Link{

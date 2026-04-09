@@ -1,0 +1,47 @@
+.graph-container {
+  width: 90%;
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  margin-bottom: 12px;
+}
+
+.price {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.change {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.change.up {
+  color: #16c784;
+}
+
+.change.down {
+  color: #ea3943;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.buttons button {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  background: transparent;
+  color: #666;
+}
+
+.buttons button.active {
+  background: #e6f4ea;
+  color: #16c784;
+}

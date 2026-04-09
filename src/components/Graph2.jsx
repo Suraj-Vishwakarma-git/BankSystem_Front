@@ -1,0 +1,99 @@
+import React, { useState, useEffect } from "react";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  CartesianGrid
+} from "recharts";
+import "./Graph2.css";
+
+const Graph2 = () => {
+  const [data, setData] = useState([]);
+
+  const fetchPrice = async () => {
+    try {
+      const res = await fetch(
+        "https://api.coingecko.com/api/v3/simple/price?ids=tether-gold&vs_currencies=usd"
+      );
+      const json = await res.json();
+      const base = json["tether-gold"].usd;
+      const oldData = JSON.parse(localStorage.getItem("goldData")) || [];
+      const last = oldData[oldData.length - 1]?.price || base;
+
+      // 🔥 small realistic movement
+      const noise = (Math.random() - 0.5) * 20;
+      const price = last + noise;
+
+      const time = new Date().toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit"
+});
+
+      const newData = [...oldData, { time, price }];
+
+      // keep only last ~50 points (1 day feel)
+      const trimmed = newData.slice(-50);
+
+      localStorage.setItem("goldData", JSON.stringify(trimmed));
+
+      setData(trimmed);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchPrice();
+    const interval = setInterval(fetchPrice, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const first = data[0]?.price || 0;
+  const last = data[data.length - 1]?.price || 0;
+
+  const change = last - first;
+  const percent = first ? ((change / first) * 100).toFixed(2) : 0;
+
+  const isUp = change >= 0;
+
+  return (
+    <div className="graph-container">
+
+      <div className="header">
+        <div className="price">${last.toFixed(2)}</div>
+
+        <div className={`change ${isUp ? "up" : "down"}`}>
+          {isUp ? "+" : ""}
+          {change.toFixed(2)} ({percent}%)
+        </div>
+      </div>
+
+      <ResponsiveContainer width="100%" height={240}>
+        <LineChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" opacity={0.08} />
+
+          <Line
+            type="monotone"
+            dataKey="price"
+            stroke={isUp ? "#16c784" : "#ea3943"}
+            strokeWidth={2.5}
+            dot={false}
+          />
+
+          {/* 🔥 still important */}
+          <YAxis domain={["dataMin - 10", "dataMax + 10"]} />
+          <XAxis dataKey="time" />
+
+          <Tooltip />
+        </LineChart>
+      </ResponsiveContainer>
+
+    </div>
+  );
+};
+
+export default Graph2;
