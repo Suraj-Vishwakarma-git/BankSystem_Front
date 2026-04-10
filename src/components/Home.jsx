@@ -7,6 +7,8 @@ import Pin from './transaction/Pin.jsx';
 import Graph from "./Graph2.jsx";
 import { useLoading } from "../context/LoadingContext";
 import GraphSilver from './GraphSilver.jsx';
+import logo from "./logo.png"
+
 
 const Home = ({ setNotification }) => {
 
@@ -277,9 +279,18 @@ async function authentification() {
 
   </div>
 
+        <div className="anotherBox stockMarket">
+          <div className="logooooBox">
+          <h3>Stock Market</h3>
+  <img src={logo} alt="trade" className="stocklogo" />
+</div>
+    <div className="Gold">GOLD</div>
+    <div className="Silver">SILVER</div>
+
+</div>
           {/* MAIN BOX — unchanged classNames */}
           <div className="mainBox">
-
+                 
             {/* LEFT CARD */}
             <div className="transactionBox">
               <h2 className="transferTitle">Transfer Money</h2>
@@ -356,14 +367,10 @@ async function authentification() {
                 <h3>Change Account PIN</h3>
               </div>
               </Link>
-              <div className="cardItem checkBalance" >
-                
-                
-                <h3>Stock Market</h3>
-              </div>
             </div>
-
+               
           </div>
+       
         </div>
       </div>
     </div>

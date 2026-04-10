@@ -26,7 +26,6 @@ const GraphSilver = () => {
       const oldData =
         JSON.parse(localStorage.getItem("silverData")) || [];
 
-      // ✅ FIX: ensure number
       const last =
         Number(oldData[oldData.length - 1]?.price) || base;
 

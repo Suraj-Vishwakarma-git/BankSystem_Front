@@ -926,3 +926,89 @@
   text-decoration: none;  
   color: inherit;
 }
+
+.stocklogo{
+  height:70px;
+  width: 100px;
+}/* MAIN CONTAINER */
+.stockMarket {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  padding: 20px 28px;
+  gap: 20px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+/* LEFT SIDE (TEXT + LOGO) */
+.stocklogoo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* TEXT */
+.txtt h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* LOGO */
+.stocklogo {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* RIGHT SIDE (GOLD + SILVER) */
+.twoooBox {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: auto;
+}
+
+/* BUTTONS */
+.Gold, .Silver {
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 180px;
+  text-align: center;
+  padding: 12px 18px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 14px;
+  font-family: var(--font-body);
+  border: none;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+/* GOLD STYLE */
+.Gold {
+  background: #f1f1f1;
+  color: #000;
+}
+
+/* SILVER STYLE */
+.Silver {
+  background: #eeeff0;
+  color: #000;
+}
+
+.Gold:hover {
+  transform: translateY(-2px);
+}
+
+.Silver:hover {
+  transform: translateY(-2px);
+}
+
+
