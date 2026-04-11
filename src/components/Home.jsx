@@ -31,6 +31,14 @@ const Home = ({ setNotification }) => {
  const [gold, setGold] = useState(null);
   const [silver, setSilver] = useState(null);
 
+
+  const [Goldprice,setGoldprice]=useState(0);
+  const [Silverprice,setSilverprice]=useState(0);
+
+
+
+
+
   useEffect(() => {
     fetchPrices();
   }, []);
@@ -267,27 +275,34 @@ async function authentification() {
   <div className="graph">
         <div className="GoldGraph">
       <h2>Gold</h2><br></br>
-      <Graph/>
-      
+      <Graph setGoldprice={setGoldprice}/>
       </div>
       
       <div className="SilverGraph">
       <h2>Silver</h2><br></br>
-      <GraphSilver/>
+      <GraphSilver setSilverprice={setSilverprice} />
   </div>
   </div>
 
   </div>
-
+      <Link to="/trade" className='Link'>
         <div className="anotherBox stockMarket">
           <div className="logooooBox">
           <h3>Stock Market</h3>
   <img src={logo} alt="trade" className="stocklogo" />
 </div>
-    <div className="Gold">GOLD</div>
-    <div className="Silver">SILVER</div>
+    <div className="Gold">
+     <div className="txxt"><h2>GOLD</h2></div>
+      <div className="pricee">${Goldprice}</div>
+      </div>
+
+    <div className="Silver">
+      <div className="txxt"><h2>SILVER</h2></div>
+      <div className="pricee">${Silverprice}</div>
+      </div>
 
 </div>
+</Link>
           {/* MAIN BOX — unchanged classNames */}
           <div className="mainBox">
                  

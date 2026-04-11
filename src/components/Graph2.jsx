@@ -10,7 +10,7 @@ import {
 } from "recharts";
 import "./Graph2.css";
 
-const Graph2 = () => {
+const Graph2 = ({setGoldprice}) => {
   const [data, setData] = useState([]);
 
   const fetchPrice = async () => {
@@ -30,7 +30,7 @@ const Graph2 = () => {
 
       // 🔥 FIX: always store number
       const price = Number((last + noise).toFixed(3));
-
+      setGoldprice(price);
       const time = new Date().toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
@@ -38,7 +38,7 @@ const Graph2 = () => {
       });
 
       const newData = [...oldData, { time, price }];
-
+      
       const trimmed = newData.slice(-50);
 
       localStorage.setItem("goldData", JSON.stringify(trimmed));
@@ -63,7 +63,6 @@ const Graph2 = () => {
   const percent = first ? ((change / first) * 100).toFixed(2) : 0;
 
   const isUp = change >= 0;
-
   return (
     <div className="graph-container">
 

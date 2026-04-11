@@ -10,7 +10,7 @@ import {
 } from "recharts";
 import "./Graph2.css";
 
-const GraphSilver = () => {
+const GraphSilver = ({setSilverprice}) => {
   const [data, setData] = useState([]);
 
   const fetchPrice = async () => {
@@ -34,7 +34,7 @@ const GraphSilver = () => {
 
       // ✅ FIX: always store number
       const price = Number((last + noise).toFixed(3));
-
+         setSilverprice(price);
       const time = new Date().toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit"

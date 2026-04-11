@@ -938,7 +938,7 @@
   align-items: center;
   width: 100%;
   padding: 20px 28px;
-  gap: 20px;
+  gap: 5px;
   box-sizing: border-box;
   cursor: pointer;
 }
@@ -993,13 +993,11 @@
 
 /* GOLD STYLE */
 .Gold {
-  background: #f1f1f1;
   color: #000;
 }
 
 /* SILVER STYLE */
 .Silver {
-  background: #eeeff0;
   color: #000;
 }
 
@@ -1012,3 +1010,10 @@
 }
 
 
+
+.Gold,.Silver{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}

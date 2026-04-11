@@ -3,7 +3,8 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DashBord from './pages/dashbord/DashBord.jsx';
 import Notification from './components/common/Notification.jsx';
-import  TransferMoney from "./pages/transaction/TransferMoney";
+import  TransferMoney from "./pages/transaction/TransferMoney.jsx";
+import Trade from './components/market/Trade.jsx';
 import Home from './components/Home.jsx';
 import TransactionHistry from './pages/transaction/TransactionHistry.jsx';
 import { useLoading } from './context/LoadingContext.jsx';
@@ -31,6 +32,7 @@ function App() {
         <Route path="/transfermoney" element={<TransferMoney setNotification={setNotification}  />}/>
         <Route path="/transactionhistory" element={<TransactionHistry/>}/>
         <Route path='/changepin' element={< ChangeAccPIN setNotification={setNotification}  />} />
+        <Route path='/trade' element={< Trade/>}/>
       </Routes>
     </BrowserRouter>
   );
