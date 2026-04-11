@@ -6,17 +6,18 @@ import { useLoading } from "../../context/LoadingContext.jsx";
 import "./Trade.css";
 
 const Trade = () => {
-  const [asset, setAsset] = useState("GOLD"); // ✅ default
+  const [asset, setAsset] = useState("GOLD");
   const [quantity, setQuantity] = useState("");
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
 
-  const [Goldprice,setGoldprice]=useState(0);
-   const [Silverprice,setSilverprice]=useState(0);
-   const [isAuthorized,setisAuthorized]=useState(false);
-  const [authPIN,setauthPIN]=useState(null);
-  const { loading, setLoading } = useLoading(); // ✅ correct usage
+  const [Goldprice, setGoldprice] = useState(0);
+  const [Silverprice, setSilverprice] = useState(0);
 
+  const [isAuthorized, setisAuthorized] = useState(false);
+  const [authPIN, setauthPIN] = useState("");
+
+  const { loading, setLoading } = useLoading();
 
   async function currentPrice() {
     setLoading(true);
@@ -28,17 +29,14 @@ const Trade = () => {
         throw new Error("Enter valid quantity");
       }
 
-      const res = await fetch(
-        "http://localhost:3000/api/stock/currentprice",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            asset,
-            quantity: Number(quantity), // ✅ FIX
-          }),
-        }
-      );
+      const res = await fetch("http://localhost:3000/api/stock/currentprice", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          asset,
+          quantity: Number(quantity),
+        }),
+      });
 
       const data = await res.json();
 
@@ -47,7 +45,6 @@ const Trade = () => {
       }
 
       setResult(data);
-
     } catch (err) {
       setError(err.message);
     } finally {
@@ -56,43 +53,61 @@ const Trade = () => {
   }
 
   async function buyAsset() {
-    const token=localStorage.getItem("token");
-    const API=await fetch("http://localhost:3000/api/stock/buyasset",{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json",
-            Authorization:`Bearer ${token}` 
-        },
-        body:JSON.stringify({asset,quantity,PIN:authPIN})
+    const token = localStorage.getItem("token");
+
+    const res = await fetch("http://localhost:3000/api/stock/buyasset", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        asset,
+        quantity,
+        PIN: authPIN,
+      }),
     });
-    if(!API.ok){
-        alert("Server Error");
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.error || "Server Error");
+      return;
     }
-    const data=await API.json();
-    if(data.message==="Asset purchased successfully"){
-        alert(data.message);
-    }
+
+    alert(data.message);
     setisAuthorized(false);
   }
 
   return (
-    <div>
+    <div className="trade-page">
       <Header />
 
-      <div className="graph">
-        <div className="GoldGraph size">
-      <h2>Gold</h2><br></br>
-      <Graph2 setGoldprice={setGoldprice}/>
-      </div>
-      
-      <div className="SilverGraph size">
-      <h2>Silver</h2><br></br>
-      <GraphSilver setSilverprice={setSilverprice} />
-  </div>
-  </div>
+      {/* DASHBOARD */}
+      <div className="dashboard">
+        <div className="asset-card">
+          <div className="asset-header">
+            <h3>Gold</h3>
+            <span className="price">₹{(Goldprice*93).toFixed(2) || "--"}</span>
+          </div>
+          <div className="graph-wrapper">
+            <Graph2 setGoldprice={setGoldprice} />
+          </div>
+        </div>
 
-      {/* TRADE CARD */}
-      <div className="trade-card">
+        <div className="asset-card">
+          <div className="asset-header">
+            <h3>Silver</h3>
+            <span className="price">₹{(Silverprice*93).toFixed(2) || "--"}</span>
+          </div>
+          <div className="graph-wrapper">
+            <GraphSilver setSilverprice={setSilverprice} />
+          </div>
+        </div>
+      </div>
+
+      {/* TRADE PANEL */}
+           <div className="trade-card">
         <h2>Trade Assets</h2>
 
         <div className="form-group">
@@ -127,7 +142,7 @@ const Trade = () => {
             <p><strong>Price per Unit:</strong> ₹{result.pricePerUnit}</p>
             <p><strong>Quantity:</strong> {result.quantity}</p>
             <p className="total">
-              Total: ₹{result.totalAmount}
+              Total: ₹{(result.totalAmount).toFixed(2)}
             </p>
             <button className="button " onClick={()=>setisAuthorized(true)}>Purchase</button>
           </div>
@@ -160,8 +175,6 @@ const Trade = () => {
   )
 }
       </div>
-
-      <div className="portfolio"></div>
     </div>
   );
 };

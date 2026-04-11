@@ -75,7 +75,7 @@ const Graph2 = ({setGoldprice}) => {
         </div>
       </div>
 
-      <ResponsiveContainer width="100%" height={240}>
+      <ResponsiveContainer width="100%" height={190}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" opacity={0.08} />
 
