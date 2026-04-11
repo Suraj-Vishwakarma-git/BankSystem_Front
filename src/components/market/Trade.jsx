@@ -13,10 +13,10 @@ const Trade = () => {
 
   const [Goldprice,setGoldprice]=useState(0);
    const [Silverprice,setSilverprice]=useState(0);
- 
- 
-
+   const [isAuthorized,setisAuthorized]=useState(false);
+  const [authPIN,setauthPIN]=useState(null);
   const { loading, setLoading } = useLoading(); // ✅ correct usage
+
 
   async function currentPrice() {
     setLoading(true);
@@ -55,17 +55,37 @@ const Trade = () => {
     }
   }
 
+  async function buyAsset() {
+    const token=localStorage.getItem("token");
+    const API=await fetch("http://localhost:3000/api/stock/buyasset",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:`Bearer ${token}` 
+        },
+        body:JSON.stringify({asset,quantity,PIN:authPIN})
+    });
+    if(!API.ok){
+        alert("Server Error");
+    }
+    const data=await API.json();
+    if(data.message==="Asset purchased successfully"){
+        alert(data.message);
+    }
+    setisAuthorized(false);
+  }
+
   return (
     <div>
       <Header />
 
       <div className="graph">
-        <div className="GoldGraph">
+        <div className="GoldGraph size">
       <h2>Gold</h2><br></br>
       <Graph2 setGoldprice={setGoldprice}/>
       </div>
       
-      <div className="SilverGraph">
+      <div className="SilverGraph size">
       <h2>Silver</h2><br></br>
       <GraphSilver setSilverprice={setSilverprice} />
   </div>
@@ -109,8 +129,36 @@ const Trade = () => {
             <p className="total">
               Total: ₹{result.totalAmount}
             </p>
+            <button className="button " onClick={()=>setisAuthorized(true)}>Purchase</button>
           </div>
         )}
+             {
+  isAuthorized && (
+    <div className="authorization">
+      <div className="auth-card">
+        
+        <p className="auth-title">Enter PIN</p>
+        <p className="auth-sub">Secure your transaction</p>
+
+        <input
+          type="password"
+          maxLength={4}
+          placeholder="••••"
+          className="pin-input"
+          onChange={(e) => setauthPIN(e.target.value)}
+        />
+
+        <button className="process-btn" onClick={buyAsset}>
+          Proceed
+        </button>
+        <button className="cancle-btn" onClick={()=>setisAuthorized(false)}>
+          Cancle
+        </button>
+
+      </div>
+    </div>
+  )
+}
       </div>
 
       <div className="portfolio"></div>
