@@ -163,7 +163,7 @@ async function authentification() {
             className={`navItem ${activeNav === 'transfers' ? 'navItemActive' : ''}`}
             onClick={() => setActiveNav('transfers')}
           >
-            <span className="navIcon">⇄</span> Transfers
+            <span className="navIcon">◎</span> Portfolio
           </div>
 
           <div
@@ -172,12 +172,11 @@ async function authentification() {
           >
             <span className="navIcon">↺</span> History
           </div>
-
           <div
-            className={`navItem ${activeNav === 'requests' ? 'navItemActive' : ''}`}
-            onClick={() => setActiveNav('requests')}
+            className={`navItem ${activeNav === 'trade' ? 'navItemActive' : ''}`}
+            onClick={() => setActiveNav('trade')}
           >
-            <span className="navIcon">◎</span> Requests
+            <span className="navIcon">⇄</span> Trade
           </div>
 
           <span className="navLabel" style={{ marginTop: '16px' }}>Account</span>

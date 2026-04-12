@@ -1,194 +1,488 @@
-/* PAGE */
-.trade-page {
+/* ─────────────────────────────────────────────
+   PAGE SHELL
+───────────────────────────────────────────── */
+.tp-root {
   background: #f7f9fb;
   min-height: 100vh;
   font-family: 'Inter', sans-serif;
+  display: flex;
+  flex-direction: column;
   overflow-x: hidden;
 }
 
-/* DASHBOARD */
-.dashboard {
+/* Wraps sidebar + main, sits below the Header */
+.tp-body {
   display: flex;
-  gap: 20px;
-  padding: 20px 40px;
-  justify-content: center;
-  align-items: flex-start;
+  flex: 1;
+  min-height: 0;
 }
 
-/* ASSET CARD */
-.asset-card {
+/* ─────────────────────────────────────────────
+   SIDEBAR
+───────────────────────────────────────────── */
+.sidebar {
+  width: 220px;
+  min-width: 220px;
+  min-height: 100%;
+  background: #fff;
+  border-right: 1px solid #eaecf0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 0;
+  /* no position:fixed — sits in normal flow */
+}
+
+.sidebarNav {
+  display: flex;
+  flex-direction: column;
+  padding: 0 12px;
+  gap: 2px;
+}
+
+.navLabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: #9ca3af;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 8px 8px 4px;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #4b5563;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.navItem:hover {
+  background: #f3f4f6;
+  color: #111;
+}
+
+.navItemActive {
+  background: #fef9e7;
+  color: #b8860b;
+  font-weight: 600;
+}
+
+.navIcon {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+.sidebarFooter {
+  padding: 0 20px;
+}
+
+.logoutBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #ef4444;
+  cursor: pointer;
+  padding: 8px 4px;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+
+.logoutBtn:hover {
+  background: #fef2f2;
+}
+
+/* ─────────────────────────────────────────────
+   MAIN CONTENT AREA
+───────────────────────────────────────────── */
+.tp-main {
+  flex: 1;
+  padding: 32px 36px;
+  overflow-y: auto;
+}
+
+.tp-section {
+  max-width: 960px;
+}
+
+.tp-section--center {
+  display: flex;
+  justify-content: center;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 24px;
+}
+
+.placeholder-text {
+  color: #9ca3af;
+  font-size: 15px;
+}
+
+/* ─────────────────────────────────────────────
+   DASHBOARD – CHARTS
+───────────────────────────────────────────── */
+.tp-board {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.tp-box {
   width: 320px;
   height: 220px;
-  background: white;
+  background: #fff;
   border-radius: 16px;
   padding: 14px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
 }
 
-/* HEADER */
-.asset-header {
+.tp-head {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.asset-header h3 {
+.tp-head h3 {
   font-size: 15px;
   font-weight: 600;
+  color: #111;
 }
 
-.price {
+.tp-rate {
   color: #00b386;
   font-weight: 600;
+  font-size: 14px;
 }
 
-/* GRAPH WRAPPER */
-.graph-wrapper {
+.tp-graph-wrap {
   position: relative;
   width: 100%;
   height: 140px;
   overflow: hidden;
 }
 
-/* SCALE FIX (for recharts overflow) */
-.asset-card .graph-container {
+.tp-graph-wrap > * {
   transform: scale(0.58);
   transform-origin: top left;
   width: 170%;
   height: 240px;
 }
 
-/* TRADE CARD */
-.trade-card {
+/* ─────────────────────────────────────────────
+   PORTFOLIO
+───────────────────────────────────────────── */
+.pf-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.pf-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pf-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.pf-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111;
+}
+
+.pf-card.pf-green .pf-value { color: #059669; }
+.pf-card.pf-red   .pf-value { color: #dc2626; }
+
+/* allocation bar */
+.pf-alloc {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.pf-alloc-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 14px;
+}
+
+.alloc-bar-wrap {
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 36px;
+}
+
+.alloc-bar {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  transition: width 0.4s ease;
+}
+
+.gold-bar   { background: #d4a017; }
+.silver-bar { background: #6b7280; }
+
+/* ─────────────────────────────────────────────
+   HOLDINGS TABLE
+───────────────────────────────────────────── */
+.holdings-table-wrap {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  overflow: hidden;
+}
+
+.holdings-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.holdings-table thead tr {
+  background: #f9fafb;
+  border-bottom: 1px solid #eaecf0;
+}
+
+.holdings-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.holdings-table td {
+  padding: 14px 16px;
+  color: #111;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: middle;
+}
+
+.holdings-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.holdings-table tbody tr:hover {
+  background: #fafafa;
+}
+
+.asset-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #fef9e7;
+  color: #b8860b;
+  font-weight: 700;
+  font-size: 12px;
+  margin-right: 8px;
+}
+
+.clr-green { color: #059669; font-weight: 600; }
+.clr-red   { color: #dc2626; font-weight: 600; }
+
+/* ─────────────────────────────────────────────
+   TRADE CARD
+───────────────────────────────────────────── */
+.tp-trade {
   width: 350px;
-  margin: 40px auto;
-  padding: 25px;
+  padding: 28px;
   border-radius: 16px;
   background: #111;
-  color: white;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
-.trade-card h2 {
+.tp-trade h2 {
   text-align: center;
-  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 24px;
 }
 
-/* FORM */
-.form-group {
-  margin-bottom: 15px;
+.tp-field {
+  margin-bottom: 16px;
 }
 
-.form-group label {
-  font-size: 14px;
-  color: #aaa;
+.tp-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: #9ca3af;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
-.form-group input,
-.form-group select {
+.tp-field input,
+.tp-field select {
   width: 100%;
-  padding: 10px;
-  margin-top: 5px;
+  padding: 10px 12px;
   border-radius: 8px;
-  border: none;
+  border: 1px solid #2d2d2d;
+  background: #1c1c1c;
+  color: #fff;
+  font-size: 14px;
   outline: none;
-  background: #222;
-  color: white;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
 }
 
-/* BUTTON */
-.button {
+.tp-field input:focus,
+.tp-field select:focus {
+  border-color: #d4a017;
+}
+
+.tp-btn {
   width: 100%;
   padding: 12px;
   border: none;
   border-radius: 10px;
-  background: gold;
-  font-weight: bold;
+  background: #d4a017;
+  color: #111;
+  font-size: 14px;
+  font-weight: 700;
   cursor: pointer;
-  transition: 0.3s;
+  transition: background 0.2s;
+  margin-top: 4px;
 }
 
-.button:hover {
-  background: #ffd700;
-}
+.tp-btn:hover    { background: #e6b520; }
+.tp-btn:disabled { background: #444; color: #777; cursor: not-allowed; }
 
-.button:disabled {
-  background: gray;
-  cursor: not-allowed;
-}
-
-/* RESULT */
-.result {
+.tp-output {
   margin-top: 20px;
-  padding: 15px;
+  padding: 16px;
   border-radius: 10px;
   background: #1a1a1a;
   color: #ccc;
+  font-size: 14px;
+  line-height: 1.8;
 }
 
-.total {
-  font-size: 18px;
-  font-weight: bold;
-  color: #00ffcc;
+.tp-total {
+  font-size: 17px;
+  font-weight: 700;
+  color: #00e5b0;
+  margin: 8px 0;
 }
 
-/* ERROR */
-.error {
+.tp-error {
   margin-top: 10px;
-  color: red;
+  color: #f87171;
+  font-size: 13px;
 }
 
-/* AUTH MODAL */
-.authorization {
+/* ─────────────────────────────────────────────
+   PIN OVERLAY
+───────────────────────────────────────────── */
+.tp-auth-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
+  inset: 0;
+  background: rgba(0,0,0,0.55);
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 999;
 }
 
-.auth-card {
+.tp-auth-box {
   background: #111;
-  padding: 20px;
-  border-radius: 14px;
+  padding: 28px 24px;
+  border-radius: 16px;
   width: 300px;
   text-align: center;
-  color: white;
+  color: #fff;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
 }
 
-.pin-input {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 8px;
-  border: none;
-  background: #222;
-  color: white;
+.auth-title {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 4px;
 }
 
-/* AUTH BUTTONS */
-.process-btn {
+.auth-sub {
+  font-size: 13px;
+  color: #9ca3af;
+  margin-bottom: 16px;
+}
+
+.tp-pin {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #2d2d2d;
+  background: #1c1c1c;
+  color: #fff;
+  font-size: 22px;
+  letter-spacing: 0.3em;
+  text-align: center;
+  outline: none;
+  box-sizing: border-box;
+  margin-bottom: 14px;
+}
+
+.tp-confirm {
+  width: 100%;
+  padding: 11px;
   border-radius: 8px;
   border: none;
-  background: #00b386;
-  color: white;
+  background: #059669;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
   cursor: pointer;
+  transition: background 0.2s;
 }
 
-.cancle-btn {
+.tp-confirm:hover { background: #047857; }
+
+.tp-cancel {
   margin-top: 10px;
   background: none;
   border: none;
-  color: #aaa;
+  color: #9ca3af;
+  font-size: 13px;
   cursor: pointer;
 }
+
+.tp-cancel:hover { color: #fff; }
