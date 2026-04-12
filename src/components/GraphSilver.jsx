@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   LineChart,
   Line,
@@ -10,57 +10,72 @@ import {
 } from "recharts";
 import "./Graph2.css";
 
-const GraphSilver = ({setSilverprice}) => {
+const Graph2 = ({ setSilverprice }) => {
   const [data, setData] = useState([]);
+  const intervalRef = useRef(null);
 
   const fetchPrice = async () => {
     try {
-      // ✅ FIX: correct silver proxy (CoinGecko doesn’t have pure silver)
       const res = await fetch(
-        "https://api.coingecko.com/api/v3/simple/price?ids=tether-gold&vs_currencies=usd"
+        "http://localhost:3000/api/stock/graph?asset=SILVER"
       );
-      const json = await res.json();
 
-      const base = Number(json["tether-gold"].usd);
+      if (!res.ok) {
+        console.error("Error fetching graph");
+        return;
+      }
 
-      const oldData =
-        JSON.parse(localStorage.getItem("silverData")) || [];
+      const apiData = await res.json();
+      const graph = apiData.graph || [];
 
-      const last =
-        Number(oldData[oldData.length - 1]?.price) || base;
+      setData(graph);
 
-      // 🔥 increase movement (important)
-      const noise = (Math.random() - 0.5) * 10;
+      if (graph.length > 0) {
+        const latest = graph[graph.length - 1].price;
+        setSilverprice(latest);
+      }
 
-      // ✅ FIX: always store number
-      const price = Number((last + noise).toFixed(3));
-         setSilverprice(price);
-      const time = new Date().toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit"
-      });
-
-      const newData = [...oldData, { time, price }];
-
-      const trimmed = newData.slice(-50);
-
-      localStorage.setItem("silverData", JSON.stringify(trimmed));
-
-      setData(trimmed);
     } catch (err) {
-      console.error(err);
+      console.error("Fetch error:", err);
     }
   };
 
   useEffect(() => {
     fetchPrice();
-    const interval = setInterval(fetchPrice, 3000);
-    return () => clearInterval(interval);
+
+    intervalRef.current = setInterval(fetchPrice, 3000);
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
   }, []);
 
-  // ✅ FIX: ensure numbers
-  const first = Number(data[0]?.price) || 0;
-  const last = Number(data[data.length - 1]?.price) || 0;
+  if (!data || data.length === 0) {
+    return (
+      <div className="graph-container">
+        <div className="loading">Loading market data...</div>
+      </div>
+    );
+  }
+
+  const displayData = data
+    .filter((_, i) => i % 2 === 0)
+    .map((point, i, arr) => {
+      if (i === 0 || i === arr.length - 1) return point;
+
+      const avg =
+        (arr[i - 1].price + point.price + arr[i + 1].price) / 3;
+
+      return {
+        ...point,
+        price: Number(avg.toFixed(2))
+      };
+    });
+
+  const first = Number(displayData[0]?.price) || 0;
+  const last = Number(displayData[displayData.length - 1]?.price) || 0;
 
   const change = last - first;
   const percent = first ? ((change / first) * 100).toFixed(2) : 0;
@@ -70,17 +85,22 @@ const GraphSilver = ({setSilverprice}) => {
   return (
     <div className="graph-container">
 
-      <div className="header">
-        <div className="price">${last.toFixed(2)}</div>
+      <div className="graph-top">
+        <div className="graph-left">
+          <h2 className="live-price">₹ {last.toLocaleString()}</h2>
+        </div>
 
-        <div className={`change ${isUp ? "up" : "down"}`}>
-          {isUp ? "+" : ""}
-          {change.toFixed(2)} ({percent}%)
+        <div className={`graph-change ${isUp ? "up" : "down"}`}>
+          <span className="arrow">{isUp ? "▲" : "▼"}</span>
+          <span>
+            {isUp ? "+" : ""}
+            {change.toFixed(2)} ({percent}%)
+          </span>
         </div>
       </div>
 
-      <ResponsiveContainer width="100%" height={190}>
-        <LineChart data={data}>
+      <ResponsiveContainer width="100%" height={200}>
+        <LineChart data={displayData}>
           <CartesianGrid strokeDasharray="3 3" opacity={0.08} />
 
           <Line
@@ -91,22 +111,24 @@ const GraphSilver = ({setSilverprice}) => {
             dot={false}
           />
 
-          {/* ✅ FIX: safe formatter */}
           <YAxis
-            domain={["dataMin - 5", "dataMax + 5"]}
-            tickFormatter={(v) => {
-              const num = Number(v);
-              return isNaN(num) ? v : num.toFixed(2);
-            }}
+            domain={["dataMin - 10", "dataMax + 10"]}
+            tickFormatter={(v) => v.toFixed(0)}
+            axisLine={false}
+            tickLine={false}
           />
 
-          <XAxis dataKey="time" />
+          <XAxis
+            dataKey="time"
+            tick={{ fontSize: 10 }}
+            axisLine={false}
+            tickLine={false}
+          />
 
-          {/* ✅ FIX: safe tooltip */}
           <Tooltip
             formatter={(v) => {
               const num = Number(v);
-              return isNaN(num) ? v : num.toFixed(2);
+              return isNaN(num) ? v : `₹ ${num.toFixed(2)}`;
             }}
           />
         </LineChart>
@@ -116,4 +138,4 @@ const GraphSilver = ({setSilverprice}) => {
   );
 };
 
-export default GraphSilver;
+export default Graph2;
