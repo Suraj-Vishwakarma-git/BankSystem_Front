@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Graph2 from "../Graph2.jsx";
 import GraphSilver from "../GraphSilver.jsx";
 import Header from "../common/Header.jsx";
@@ -36,14 +36,67 @@ const Trade = () => {
   /* price display */
   const [goldPrice, setGoldPrice]     = useState(0);
   const [silverPrice, setSilverPrice] = useState(0);
-
-  const { loading, setLoading } = useLoading();
+  const [portfolio, setPortfolio] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   function handleLogout() {
     localStorage.removeItem("token");
     sessionStorage.clear();
     window.location.href = "/";
   }
+
+async function fetchPortfolio() {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    alert("Login required");
+    return;
+  }
+
+  try {
+    const res = await fetch(
+      "http://localhost:3000/api/stock/getPortfolio",
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message || "Failed to load portfolio");
+      return;
+    }
+
+    setPortfolio(data.data);
+
+  } catch (err) {
+    console.error("Portfolio error:", err);
+  } finally {
+    setLoading(false);
+  }
+}
+
+useEffect(() => {
+  fetchPortfolio();
+}, []);
+
+  if (loading) {
+  return <div className="portfolio-card">Loading portfolio...</div>;
+}
+
+if (!portfolio || portfolio.holdings.length === 0) {
+  return (
+    <div className="portfolio-card empty">
+      <h2>No Holdings Yet</h2>
+      <p>Start buying Gold or Silver to build your portfolio.</p>
+    </div>
+  );
+}
+
 
   async function currentPrice() {
     setLoading(true);
@@ -167,41 +220,60 @@ const Trade = () => {
 
         {/* ════ PORTFOLIO ════ */}
         {activeNav === "portfolio" && (
-          <section className="tp-section">
-            <h2 className="section-title">Portfolio</h2>
+         <div className="portfolio-card">
 
-            <div className="pf-summary-grid">
-              <div className="pf-card">
-                <span className="pf-label">Total Value</span>
-                <span className="pf-value">{fmt(MOCK_PORTFOLIO.totalValue)}</span>
-              </div>
-              <div className="pf-card">
-                <span className="pf-label">Total Invested</span>
-                <span className="pf-value">{fmt(MOCK_PORTFOLIO.totalInvested)}</span>
-              </div>
-              <div className={`pf-card ${MOCK_PORTFOLIO.totalPnL >= 0 ? "pf-green" : "pf-red"}`}>
-                <span className="pf-label">Overall P&amp;L</span>
-                <span className="pf-value">{fmt(MOCK_PORTFOLIO.totalPnL)}</span>
-              </div>
-              <div className={`pf-card ${MOCK_PORTFOLIO.todayPnL >= 0 ? "pf-green" : "pf-red"}`}>
-                <span className="pf-label">Today's P&amp;L</span>
-                <span className="pf-value">{fmt(MOCK_PORTFOLIO.todayPnL)}</span>
-              </div>
-            </div>
+    {/* 🔥 SUMMARY */}
+    <div className="portfolio-summary">
+      <h2>Portfolio</h2>
 
-            {/* allocation bar */}
-            <div className="pf-alloc">
-              <h3 className="pf-alloc-title">Asset Allocation</h3>
-              <div className="alloc-bar-wrap">
-                <div className="alloc-bar gold-bar" style={{ width: "38%" }}>
-                  <span>Gold 38%</span>
-                </div>
-                <div className="alloc-bar silver-bar" style={{ width: "62%" }}>
-                  <span>Silver 62%</span>
-                </div>
-              </div>
-            </div>
-          </section>
+      <p>Balance: ₹ {portfolio.balance.toLocaleString()}</p>
+
+      <p>Total Value: ₹ {portfolio.totalCurrentValue.toLocaleString()}</p>
+
+      <p>
+        Profit/Loss:{" "}
+        <span
+          style={{
+            color:
+              portfolio.totalProfitLoss >= 0 ? "#16c784" : "#ea3943"
+          }}
+        >
+          ₹ {portfolio.totalProfitLoss.toLocaleString()}
+        </span>
+      </p>
+    </div>
+
+    {/* 🔥 HOLDINGS */}
+    <div className="holdings">
+
+      {portfolio.holdings.map((item) => (
+        <div key={item._id} className="holding-card">
+
+          <h3>◎ {item.asset}</h3>
+
+          <p>Quantity: {item.totalQuantity}</p>
+
+          <p>Avg Price: ₹ {item.avgPrice.toFixed(2)}</p>
+
+          <p>Current Price: ₹ {item.currentPrice.toFixed(2)}</p>
+
+          <p>Value: ₹ {item.currentValue.toLocaleString()}</p>
+
+          <p
+            style={{
+              color:
+                item.profitLoss >= 0 ? "#16c784" : "#ea3943"
+            }}
+          >
+            P/L: ₹ {item.profitLoss.toLocaleString()}
+          </p>
+
+        </div>
+      ))}
+
+    </div>
+
+  </div>
         )}
 
         {/* ════ HOLDINGS ════ */}

@@ -486,3 +486,35 @@
 }
 
 .tp-cancel:hover { color: #fff; }
+
+
+
+
+.portfolio-card {
+  background: #111;
+  color: white;
+  padding: 20px;
+  border-radius: 16px;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.portfolio-summary {
+  margin-bottom: 20px;
+}
+
+.holdings {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.holding-card {
+  background: #1a1a1a;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.empty {
+  text-align: center;
+}
