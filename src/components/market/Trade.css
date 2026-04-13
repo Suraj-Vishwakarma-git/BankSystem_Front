@@ -1,520 +1,353 @@
-/* ─────────────────────────────────────────────
-   PAGE SHELL
-───────────────────────────────────────────── */
-.tp-root {
-  background: #f7f9fb;
-  min-height: 100vh;
-  font-family: 'Inter', sans-serif;
-  display: flex;
-  flex-direction: column;
-  overflow-x: hidden;
-}
-
-/* Wraps sidebar + main, sits below the Header */
-.tp-body {
-  display: flex;
-  flex: 1;
-  min-height: 0;
-}
-
-/* ─────────────────────────────────────────────
-   SIDEBAR
-───────────────────────────────────────────── */
-.sidebar {
-  width: 220px;
-  min-width: 220px;
-  min-height: 100%;
-  background: #fff;
-  border-right: 1px solid #eaecf0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 20px 0;
-  /* no position:fixed — sits in normal flow */
-}
-
-.sidebarNav {
-  display: flex;
-  flex-direction: column;
-  padding: 0 12px;
-  gap: 2px;
-}
-
-.navLabel {
-  font-size: 11px;
-  font-weight: 600;
-  color: #9ca3af;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  padding: 8px 8px 4px;
-}
-
-.navItem {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 9px 12px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #4b5563;
-  cursor: pointer;
-  transition: background 0.15s, color 0.15s;
-}
-
-.navItem:hover {
-  background: #f3f4f6;
-  color: #111;
-}
-
-.navItemActive {
-  background: #fef9e7;
-  color: #b8860b;
-  font-weight: 600;
-}
-
-.navIcon {
-  font-size: 16px;
-  width: 20px;
-  text-align: center;
-}
-
-.sidebarFooter {
-  padding: 0 20px;
-}
-
-.logoutBtn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: #ef4444;
-  cursor: pointer;
-  padding: 8px 4px;
-  border-radius: 8px;
-  transition: background 0.15s;
-}
-
-.logoutBtn:hover {
-  background: #fef2f2;
-}
-
-/* ─────────────────────────────────────────────
-   MAIN CONTENT AREA
-───────────────────────────────────────────── */
-.tp-main {
-  flex: 1;
-  padding: 32px 36px;
-  overflow-y: auto;
-}
-
-.tp-section {
-  max-width: 960px;
-}
-
-.tp-section--center {
-  display: flex;
-  justify-content: center;
-}
-
-.section-title {
-  font-size: 20px;
-  font-weight: 700;
-  color: #111;
-  margin-bottom: 24px;
-}
-
-.placeholder-text {
-  color: #9ca3af;
-  font-size: 15px;
-}
-
-/* ─────────────────────────────────────────────
-   DASHBOARD – CHARTS
-───────────────────────────────────────────── */
-.tp-board {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.tp-box {
-  width: 320px;
-  height: 220px;
-  background: #fff;
-  border-radius: 16px;
-  padding: 14px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  overflow: hidden;
-}
-
-.tp-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.tp-head h3 {
-  font-size: 15px;
-  font-weight: 600;
-  color: #111;
-}
-
-.tp-rate {
-  color: #00b386;
-  font-weight: 600;
-  font-size: 14px;
-}
-
-.tp-graph-wrap {
-  position: relative;
-  width: 100%;
-  height: 140px;
-  overflow: hidden;
-}
-
-.tp-graph-wrap > * {
-  transform: scale(0.58);
-  transform-origin: top left;
-  width: 170%;
-  height: 240px;
-}
-
-/* ─────────────────────────────────────────────
-   PORTFOLIO
-───────────────────────────────────────────── */
-.pf-summary-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-bottom: 32px;
-}
-
-.pf-card {
-  background: #fff;
-  border-radius: 12px;
-  padding: 18px 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.pf-label {
-  font-size: 12px;
-  font-weight: 500;
-  color: #9ca3af;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.pf-value {
-  font-size: 20px;
-  font-weight: 700;
-  color: #111;
-}
-
-.pf-card.pf-green .pf-value { color: #059669; }
-.pf-card.pf-red   .pf-value { color: #dc2626; }
-
-/* allocation bar */
-.pf-alloc {
-  background: #fff;
-  border-radius: 12px;
-  padding: 20px 24px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-.pf-alloc-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: #374151;
-  margin-bottom: 14px;
-}
-
-.alloc-bar-wrap {
-  display: flex;
-  border-radius: 8px;
-  overflow: hidden;
-  height: 36px;
-}
-
-.alloc-bar {
-  display: flex;
-  align-items: center;
-  padding: 0 12px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #fff;
-  transition: width 0.4s ease;
-}
-
-.gold-bar   { background: #d4a017; }
-.silver-bar { background: #6b7280; }
-
-/* ─────────────────────────────────────────────
-   HOLDINGS TABLE
-───────────────────────────────────────────── */
-.holdings-table-wrap {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  overflow: hidden;
-}
-
-.holdings-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-}
-
-.holdings-table thead tr {
-  background: #f9fafb;
-  border-bottom: 1px solid #eaecf0;
-}
-
-.holdings-table th {
-  padding: 12px 16px;
-  text-align: left;
-  font-size: 12px;
-  font-weight: 600;
-  color: #6b7280;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-}
-
-.holdings-table td {
-  padding: 14px 16px;
-  color: #111;
-  border-bottom: 1px solid #f3f4f6;
-  vertical-align: middle;
-}
-
-.holdings-table tbody tr:last-child td {
-  border-bottom: none;
-}
-
-.holdings-table tbody tr:hover {
-  background: #fafafa;
-}
-
-.asset-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: #fef9e7;
-  color: #b8860b;
-  font-weight: 700;
-  font-size: 12px;
-  margin-right: 8px;
-}
-
-.clr-green { color: #059669; font-weight: 600; }
-.clr-red   { color: #dc2626; font-weight: 600; }
-
-/* ─────────────────────────────────────────────
-   TRADE CARD
-───────────────────────────────────────────── */
-.tp-trade {
-  width: 350px;
-  padding: 28px;
-  border-radius: 16px;
-  background: #111;
-  color: #fff;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-
-.tp-trade h2 {
-  text-align: center;
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 24px;
-}
-
-.tp-field {
-  margin-bottom: 16px;
-}
-
-.tp-field label {
-  display: block;
-  font-size: 12px;
-  font-weight: 500;
-  color: #9ca3af;
-  margin-bottom: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.tp-field input,
-.tp-field select {
-  width: 100%;
-  padding: 10px 12px;
-  border-radius: 8px;
-  border: 1px solid #2d2d2d;
-  background: #1c1c1c;
-  color: #fff;
-  font-size: 14px;
-  outline: none;
+/* ================= BASE ================= */
+* {
+ 
   box-sizing: border-box;
-  transition: border-color 0.2s;
+  font-family: "Inter", sans-serif;
 }
 
-.tp-field input:focus,
-.tp-field select:focus {
-  border-color: #d4a017;
-}
-
-.tp-btn {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  background: #d4a017;
+body {
+  background: #ffffff;
   color: #111;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.2s;
-  margin-top: 4px;
 }
 
-.tp-btn:hover    { background: #e6b520; }
-.tp-btn:disabled { background: #444; color: #777; cursor: not-allowed; }
-
-.tp-output {
-  margin-top: 20px;
-  padding: 16px;
-  border-radius: 10px;
-  background: #1a1a1a;
-  color: #ccc;
-  font-size: 14px;
-  line-height: 1.8;
-}
-
-.tp-total {
-  font-size: 17px;
-  font-weight: 700;
-  color: #00e5b0;
-  margin: 8px 0;
-}
-
-.tp-error {
-  margin-top: 10px;
-  color: #f87171;
-  font-size: 13px;
-}
-
-/* ─────────────────────────────────────────────
-   PIN OVERLAY
-───────────────────────────────────────────── */
-.tp-auth-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.55);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-.tp-auth-box {
-  background: #111;
-  padding: 28px 24px;
-  border-radius: 16px;
-  width: 300px;
-  text-align: center;
-  color: #fff;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-}
-
-.auth-title {
-  font-size: 17px;
-  font-weight: 700;
-  margin-bottom: 4px;
-}
-
-.auth-sub {
-  font-size: 13px;
-  color: #9ca3af;
-  margin-bottom: 16px;
-}
-
-.tp-pin {
+/* ================= LAYOUT ================= */
+.app {
+  height: 100%;
   width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #2d2d2d;
-  background: #1c1c1c;
-  color: #fff;
-  font-size: 22px;
-  letter-spacing: 0.3em;
-  text-align: center;
-  outline: none;
-  box-sizing: border-box;
-  margin-bottom: 14px;
-}
-
-.tp-confirm {
-  width: 100%;
-  padding: 11px;
-  border-radius: 8px;
-  border: none;
-  background: #059669;
-  color: #fff;
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.tp-confirm:hover { background: #047857; }
-
-.tp-cancel {
-  margin-top: 10px;
-  background: none;
-  border: none;
-  color: #9ca3af;
-  font-size: 13px;
-  cursor: pointer;
-}
-
-.tp-cancel:hover { color: #fff; }
-
-
-
-
-.portfolio-card {
-  background: #111;
-  color: white;
   padding: 20px;
-  border-radius: 16px;
-  max-width: 600px;
-  margin: 20px auto;
 }
 
-.portfolio-summary {
-  margin-bottom: 20px;
-}
-
-.holdings {
+/* ================= HEADER ================= */
+.header {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
   gap: 12px;
 }
 
-.holding-card {
-  background: #1a1a1a;
-  padding: 15px;
-  border-radius: 10px;
+.user {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
-.empty {
-  text-align: center;
+.user button {
+  padding: 6px 12px;
+  border: none;
+  background: black;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ================= CARDS ================= */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+/* ================= SUMMARY ================= */
+.summary {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  gap: 10px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.summary .card {
+  flex: 1;
+  min-width: 200px;
+}
+
+.card.big {
+  background: #f8f9fa;
+}
+
+/* ================= MAIN WRAPPER ================= */
+.oneBox {
+  display: flex;
+  width: 100%;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* ================= CHARTS ================= */
+.charts {
+  display: flex;
+  width: 50%;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.charts .card {
+  flex: 1;
+  min-width: 250px;
+}
+
+/* ================= HOLDINGS ================= */
+.holdings {
+  width: 50%;
+}
+
+.holdings h2 {
+  margin-bottom: 12px;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.holding {
+  flex: 1;
+  min-width: 220px;
+  max-width: 300px;
+  padding: 16px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.info p {
+  font-size: 14px;
+  color: #555;
+}
+
+.bottom {
+  margin-top: 10px;
+}
+
+/* ================= STATES ================= */
+.center {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.error {
+  color: red;
+}
+
+.profit {
+  color: #16a34a;
+}
+
+.loss {
+  color: #dc2626;
+}
+
+/* ===================================================== */
+/* 📱 MOBILE (<= 768px) */
+/* ===================================================== */
+@media (max-width: 768px) {
+
+  .app {
+    padding: 12px;
+  }
+
+  /* HEADER */
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* SUMMARY */
+  .summary {
+    flex-direction: column;
+  }
+
+  /* STACK MAIN */
+  .oneBox {
+    flex-direction: column;
+  }
+
+  /* CHARTS */
+  .charts {
+    width: 100%;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* HOLDINGS */
+  .holdings {
+    width: 100%;
+  }
+
+  .grid {
+    flex-direction: column;
+  }
+
+  .holding {
+    max-width: 100%;
+  }
+
+}
+
+/* ===================================================== */
+/* 📲 TABLET (768px - 1024px) */
+/* ===================================================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  .oneBox {
+    flex-direction: column;
+  }
+
+  .charts {
+    width: 100%;
+  }
+
+  .holdings {
+    width: 100%;
+  }
+
+  .holding {
+    max-width: 45%;
+  }
+
+}
+
+/* ===================================================== */
+/* 💻 LARGE SCREENS (>1200px) */
+/* ===================================================== */
+@media (min-width: 1200px) {
+
+  .app {
+    max-width: 1400px;
+    margin: auto;
+  }
+
+}
+
+
+/* ================= TRADE SECTION ================= */
+.trade-section {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+/* MATCH YOUR CARD STYLE */
+.trade-card {
+  flex: 1;
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  border: 1px solid #f1f1f1;
+}
+
+/* HEADER */
+.trade-card h2 {
+  font-size: 16px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+/* INPUT GROUP */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.input-group label {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 3px;
+}
+
+.input-group input,
+.input-group select {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  font-size: 13px;
+}
+
+/* BUTTON */
+.trade-card button {
+  width: 100%;
+  padding: 9px;
+  border-radius: 6px;
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
+  margin-top: 6px;
+}
+
+/* BUY */
+.trade-card.buy button {
+  background: #16a34a;
+  color: white;
+}
+
+/* SELL */
+.trade-card.sell button {
+  background: #dc2626;
+  color: white;
+}
+
+/* HOVER */
+.trade-card.buy button:hover {
+  background: #15803d;
+}
+
+.trade-card.sell button:hover {
+  background: #b91c1c;
+}
+.buySell{
+  display: flex;
+  gap:10px;
+}
+.BuyAndSell{
+  display: flex;
+  gap:10px
+}
+
+/* ================= FIX BUY/SELL MOBILE ================= */
+@media (max-width: 768px) {
+
+  /* MAIN WRAPPER ALREADY STACKED */
+  .buySell {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  /* HOLDINGS FULL WIDTH */
+  .buySell .holdings {
+    width: 100%;
+  }
+
+  /* BUY + SELL CARDS STACK */
+  .BuyAndSell {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  /* EACH CARD FULL WIDTH */
+  .trade-card {
+    width: 100%;
+  }
+
 }
