@@ -271,6 +271,8 @@ async function authentification() {
     </span>
   </div>
   </div>
+  <div className="TRADING">
+ 
   <div className="graph">
         <div className="GoldGraph">
       <h2>Gold</h2><br></br>
@@ -281,27 +283,14 @@ async function authentification() {
       <h2>Silver</h2><br></br>
       <GraphSilver setSilverprice={setSilverprice} />
   </div>
+  
+ 
   </div>
-
+<Link to="/trade" className='Link'> <span className="cta">Trade →</span></Link> 
+</div>
   </div>
-      <Link to="/trade" className='Link'>
-        <div className="anotherBox stockMarket">
-          <div className="logooooBox">
-          <h3>Stock Market</h3>
-  <img src={logo} alt="trade" className="stocklogo" />
-</div>
-    <div className="Gold">
-     <div className="txxt"><h2>GOLD</h2></div>
-      <div className="pricee">${Goldprice}</div>
-      </div>
+    
 
-    <div className="Silver">
-      <div className="txxt"><h2>SILVER</h2></div>
-      <div className="pricee">${Silverprice}</div>
-      </div>
-
-</div>
-</Link>
           {/* MAIN BOX — unchanged classNames */}
           <div className="mainBox">
                  

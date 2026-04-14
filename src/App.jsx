@@ -32,7 +32,7 @@ function App() {
         <Route path="/transfermoney" element={<TransferMoney setNotification={setNotification}  />}/>
         <Route path="/transactionhistory" element={<TransactionHistry/>}/>
         <Route path='/changepin' element={< ChangeAccPIN setNotification={setNotification}  />} />
-        <Route path='/trade' element={< Trade/>}/>
+        <Route path='/trade' element={< Trade setNotification={setNotification} />}/>
       </Routes>
     </BrowserRouter>
   );
