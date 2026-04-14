@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Graph2 from "../Graph2.jsx";
+import { Link } from "react-router-dom";
 import GraphSilver from "../GraphSilver.jsx";
 import Header from "../common/Header.jsx";
 import { useLoading } from "../../context/LoadingContext.jsx";
@@ -360,11 +361,15 @@ const Trade = ({ setNotification }) => {
           </div>
         </div>
       </div>
+  <Link className="Link" to="/stockhistory">
    <div className="historyMain">
+  
     <div className="history-title" >
   Transaction History →
 </div>
+
 </div>
+</Link>
     </div>
   );
 };

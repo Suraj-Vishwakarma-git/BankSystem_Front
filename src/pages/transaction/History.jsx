@@ -61,15 +61,7 @@ return (
     <div className="history-header">
       <h2>Account Overview</h2>
 
-      {/* <div className="pin-row">
-        <input
-          type="password"
-          placeholder="Enter PIN"
-          value={PIN}
-          onChange={(e) => setPIN(e.target.value)}
-        />
-        <button onClick={FetchBalance}>Check</button>
-      </div> */}
+   
 
       {balance !== null && (
         <div className="balance-card">
@@ -84,17 +76,9 @@ return (
       )}
     </div>
 
-    {/* SCROLLABLE TRANSACTIONS */}
     <div className="transactions-section">
 
-      {/* 👇 Show message if PIN not entered */}
-      {/* {!PIN && (
-        <div className="empty-state">
-          Enter PIN to check history
-        </div>
-      )} */}
 
-      {/* 👇 Show transactions only if available */}
       { history.length > 0 && (
         <>
           <h3>Recent Transactions</h3>

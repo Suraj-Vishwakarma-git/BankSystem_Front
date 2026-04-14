@@ -1,0 +1,232 @@
+/* ================= WRAPPER ================= */
+.stk-wrapper {
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  padding: 15px;
+  border-radius: 12px;
+  margin-top: 20px;
+  background: #f5f5f5;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+/* LEFT PANEL */
+.stk-history-left {
+  flex: 1;
+}
+
+/* RIGHT PANEL */
+.stk-history-right {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+}
+
+/* TITLE */
+.stk-title {
+  margin-bottom: 12px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* ================= TRANSACTIONS ================= */
+.stk-transactions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+/* ================= CARD ================= */
+.stk-card {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr; /* 🔥 PERFECT ALIGNMENT */
+  align-items: center;
+
+  padding: 14px 16px;
+  border-radius: 12px;
+
+  background: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+
+  transition: 0.2s;
+}
+
+.stk-card:hover {
+  transform: translateY(-2px);
+}
+
+/* ================= LEFT ================= */
+.stk-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* ICON */
+.stk-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.stk-debit {
+  background: #ffe5e5;
+  color: red;
+}
+
+.stk-credit {
+  background: #e5ffe5;
+  color: green;
+}
+
+/* TEXT */
+.stk-asset {
+  margin: 0;
+  font-weight: 600;
+}
+
+.stk-sub {
+  margin: 0;
+  font-size: 12px;
+  color: gray;
+}
+
+/* ================= PRICE BLOCK ================= */
+.stk-price {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+
+  font-size: 13px;
+}
+
+.stk-price h4 {
+  margin: 0;
+  font-size: 11px;
+  color: gray;
+}
+
+.stk-price h5 {
+  margin: 0;
+  font-size: 11px;
+  color: #555;
+}
+
+/* ================= AMOUNT ================= */
+.stk-amount {
+  text-align: right;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.stk-debit-text {
+  color: red;
+}
+
+.stk-credit-text {
+  color: green;
+}
+
+/* ================= EMPTY ================= */
+.stk-empty {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: gray;
+  font-size: 14px;
+}
+
+/* ================= SCROLLBAR ================= */
+.stk-transactions::-webkit-scrollbar {
+  width: 5px;
+}
+
+.stk-transactions::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+  .stk-wrapper {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .stk-card {
+    grid-template-columns: 1fr; /* stack */
+    gap: 10px;
+  }
+
+  .stk-amount {
+    text-align: left;
+  }
+
+  .stk-price {
+    align-items: flex-start;
+  }
+}/* ================= MOBILE SAFE FIX ================= */
+@media (max-width: 768px) {
+
+  .stk-main {
+    height: calc(100vh - 60px); /* adjust if header height differs */
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stk-wrapper {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    overflow: hidden; /* only inside this component */
+  }
+
+  /* BOTH BOXES SCROLL INTERNALLY */
+  .stk-history-left,
+  .stk-history-right {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+
+    padding: 10px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+  }
+
+  /* SCROLLBAR */
+  .stk-history-left::-webkit-scrollbar,
+  .stk-history-right::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .stk-history-left::-webkit-scrollbar-thumb,
+  .stk-history-right::-webkit-scrollbar-thumb {
+    background: #bbb;
+    border-radius: 10px;
+  }
+
+  /* TRANSACTION LIST */
+  .stk-transactions {
+    overflow-y: auto;
+    min-height: 0;
+  }
+
+}

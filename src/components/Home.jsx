@@ -226,7 +226,7 @@ async function authentification() {
           <div className="stripStat">
             <span className="stripStatLabel">Available Balance</span>
             {
-            revealBalance?(<span className="stripStatVal">₹ {accBalance}</span>):
+            revealBalance?(<span className="stripStatVal">₹ {accBalance.toFixed(2)}</span>):
             (<span className="stripStatVal">₹ *****</span>)
           }
           </div>

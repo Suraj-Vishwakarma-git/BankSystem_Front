@@ -9,6 +9,7 @@ import Home from './components/Home.jsx';
 import TransactionHistry from './pages/transaction/TransactionHistry.jsx';
 import { useLoading } from './context/LoadingContext.jsx';
 import ChangeAccPIN from './pages/transaction/ChangeAccPIN.jsx';
+import Stock from './pages/StockMarket/StockHistory.jsx';
 function App() {
   const [notification,setNotification]=useState(null);
   const { loading} = useLoading();
@@ -33,6 +34,7 @@ function App() {
         <Route path="/transactionhistory" element={<TransactionHistry/>}/>
         <Route path='/changepin' element={< ChangeAccPIN setNotification={setNotification}  />} />
         <Route path='/trade' element={< Trade setNotification={setNotification} />}/>
+        <Route path="/stockhistory" element={<Stock setNotification={setNotification} />}/>
       </Routes>
     </BrowserRouter>
   );
