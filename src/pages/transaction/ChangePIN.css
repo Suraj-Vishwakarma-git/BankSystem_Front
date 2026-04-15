@@ -1,108 +1,389 @@
-/* Page */
-.page {
-  min-height: 80vh;
-  background: #f5f6fa;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+/* ================= ChangePinPro.css (NEXT LEVEL) ================= */
+
+.pin-root {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #eef2ff, #f8fafc);
 }
 
-/* Card */
-.card {
+.MainContainerr {
+  min-height: calc(100vh - 70px);
   width: 100%;
-  max-width: 380px;
-  background: #fff;
-  border-radius: 18px;
-  padding: 26px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+
+  display: flex;
+  gap: 28px;
+  justify-content: center;
+  align-items: flex-start;
+
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Centering */
+.pin-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 70px);
+}
+
+.pin-container {
+  height: auto; /* remove fixed height */
+}
+.reqp-card,
+.pin-card {
+  width: 380px;
+  max-width: 100%;
+  min-height: 420px; /* 🔥 consistent height */
+}
+
+.reqp-btn:active,
+.pin-btn-primary:active {
+  transform: scale(0.96);
+}
+.reqp-root {
+  min-height: auto;
+}
+/* Card Upgrade */
+.pin-card {
+  width: 380px;
+  padding: 32px;
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.08),
+    0 2px 10px rgba(0, 0, 0, 0.05);
+
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 /* Title */
-.title {
+.pin-title {
   text-align: center;
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #111;
 }
 
-/* Group */
-.inputGroup {
+/* Form */
+.pin-form {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 22px;
 }
 
-/* Each field */
-.field {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* 🔥 THIS FIXES LEFT ALIGNMENT */
-  width: 100%;
-}
-
-/* Label (important fix) */
-.field label {
-  font-size: 13px;
-  color: #444;
+/* Labels */
+.pin-field label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #666;
   margin-bottom: 6px;
-  text-align: left;
-  width: 100%;
+  display: block;
 }
 
-/* Input */
-.input {
+/* PIN INPUT (UPGRADED) */
+.pin-input {
   width: 100%;
   padding: 14px;
   border-radius: 12px;
-  border: 1px solid #ddd;
-  background: #fafafa;
+  border: 1px solid #e5e7eb;
+  color: #111;
 
-  font-size: 18px;
+  font-size: 20px;
+  letter-spacing: 10px; /* 🔥 PIN look */
   text-align: center;
-  letter-spacing: 8px;
 
+  transition: all 0.25s ease;
+  background: #f9fafb;
+}
+
+/* Focus Animation */
+.pin-input:focus {
   outline: none;
-  transition: all 0.2s ease;
-}
-.btn_Home{
-    height: 30px;
-    width:50px;
-    border-radius: 10px;
-    cursor: pointer;
-    background-color: #dedede;
+  border-color: #4f46e5;
+  background: white;
+
+  box-shadow: 
+    0 0 0 3px rgba(79, 70, 229, 0.15),
+    0 4px 15px rgba(79, 70, 229, 0.1);
 }
 
-/* Focus */
-.input:focus {
-  border-color: #000;
-  background: #fff;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+/* Actions */
+.pin-actions {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-/* Button */
-.btn {
-  width: 100%;
-  margin-top: 20px;
-  padding: 14px;
-  background: #000;
-  color: #fff;
+/* Primary Button */
+.pin-btn-primary {
+  padding: 13px;
   border-radius: 12px;
   border: none;
-  font-size: 15px;
+
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: white;
+  font-weight: 600;
+
   cursor: pointer;
+  transition: all 0.25s ease;
+
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.25);
+}
+
+/* Hover */
+.pin-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(79, 70, 229, 0.35);
+}
+
+/* Click effect */
+.pin-btn-primary:active {
+  transform: scale(0.97);
 }
 
 /* Disabled */
-.btn:disabled {
-  background: #ccc;
+.pin-btn-primary:disabled {
+  background: #d1d5db;
+  box-shadow: none;
   cursor: not-allowed;
 }
 
+/* Secondary Button */
+.pin-btn-secondary {
+  padding: 11px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+
+  background: white;
+  font-weight: 500;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Hover */
+.pin-btn-secondary:hover {
+  background: #f3f4f6;
+}
+
 /* Footer */
-.footerText {
+.pin-footer {
+  margin-top: 22px;
+  font-size: 12px;
+  text-align: center;
+  color: #6b7280;
+}
+
+/* ================= RequestMoneyPro.css ================= */
+
+.reqp-root {
+  min-height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #eef2ff, #f8fafc);
+}
+
+/* Card */
+.reqp-card {
+  width: 380px;
+  padding: 30px;
+  border-radius: 22px;
+
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(14px);
+
+  box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+}
+
+/* Bank Header */
+.bank-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.bank-logo {
+  width: 100px;
+  height: 60px;
+}
+
+.bank-name {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.bank-sub {
+  font-size: 12px;
+  color: #666;
+}
+
+/* Title */
+.reqp-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* Amount */
+.amount-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.amount-box input {
+  border: none;
+  outline: none;
+  font-size: 36px;
+  width: 140px;
+  text-align: center;
+  background: transparent;
+}
+
+/* Note */
+.note {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 20px;
+}
+
+/* Button */
+.reqp-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: white;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: 0.25s;
+
+  box-shadow: 0 8px 25px rgba(79,70,229,0.3);
+}
+
+.reqp-btn:hover {
+  transform: translateY(-2px);
+}
+
+.reqp-btn:disabled {
+  background: #d1d5db;
+  box-shadow: none;
+}
+
+/* Footer */
+.secure {
   text-align: center;
   font-size: 12px;
-  color: #888;
-  margin-top: 16px;
+  margin-top: 15px;
+  color: #666;
+}
+
+/* SUCCESS OVERLAY */
+.success-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Success card */
+.success-card {
+  background: white;
+  padding: 30px;
+  border-radius: 18px;
+  text-align: center;
+  width: 280px;
+}
+
+.tick {
+  width: 60px;
+  height: 60px;
+  background: #22c55e;
+  color: white;
+  font-size: 30px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+
+  margin: 0 auto 15px;
+}
+
+@media (max-width: 768px) {
+
+  .MainContainerr{
+    height: fit-content;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .reqp-card,
+  .pin-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 22px;
+  }
+
+  /* Amount input fix */
+  .amount-box input {
+    font-size: 28px;
+    width: 100px;
+  }
+
+  /* Title smaller */
+  .reqp-title,
+  .pin-title {
+    font-size: 20px;
+  }
+
+  /* Buttons */
+  .reqp-btn,
+  .pin-btn-primary {
+    padding: 12px;
+  }
+
+  /* From card tighter */
+  .from-card {
+    padding: 10px;
+  }
+
+  .from-logo {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+.success-meta {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 12px;
+  color: #555;
+}
+
+.success-meta img {
+  width: 28px;
 }

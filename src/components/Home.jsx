@@ -353,14 +353,18 @@ async function authentification() {
             {/* RIGHT CARD */}
             <div className="anotherBox">
               <div className="anotherBoxTitle">More Options</div>
-
+                
+                <Link to="/stockhistory"className='Link' >
               <div className="cardItem">
                 <h3>Transaction History</h3>
               </div>
+              </Link>
 
+              <Link className='Link' to="/changepin">
               <div className="cardItem">
                 <h3>Request Money</h3>
               </div>
+              </Link>
 
               <div className="cardItem" onClick={() => { setPinModel(true); check(); }}>
                 <h3>Set Account PIN</h3>
