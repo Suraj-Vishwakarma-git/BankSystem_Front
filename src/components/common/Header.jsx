@@ -10,7 +10,7 @@ const Header = ({setispinExits}) => {
   const [email,setEmail]=useState("");
   const [profileModel,setprofileModel]=useState(false);
  
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   function handleLogout(){
     localStorage.removeItem("token");
     sessionStorage.clear();

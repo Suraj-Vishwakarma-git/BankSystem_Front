@@ -9,6 +9,7 @@ import Home from './components/Home.jsx';
 import TransactionHistry from './pages/transaction/TransactionHistry.jsx';
 import { useLoading } from './context/LoadingContext.jsx';
 import ChangeAccPIN from './pages/transaction/ChangeAccPIN.jsx';
+import Setting from './pages/setting/setting.jsx';
 import Stock from './pages/StockMarket/StockHistory.jsx';
 function App() {
   const [notification,setNotification]=useState(null);
@@ -28,6 +29,7 @@ function App() {
           </div>
         ) }        
       <Routes>
+        <Route path='/setting' element={<Setting/>}/>
         <Route path="/" element={<DashBord setNotification={setNotification} />} />
         <Route path="/home" element={<Home setNotification={setNotification} />} />
         <Route path="/transfermoney" element={<TransferMoney setNotification={setNotification}  />}/>
