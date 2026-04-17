@@ -86,9 +86,13 @@
 }
 
 .stg-balance-amount {
-  font-size: 22px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 700;
   margin-top: 6px;
+    white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
 }
 
 .stg-toggle-btn {
@@ -242,4 +246,8 @@
   .stg-options {
     grid-template-columns: 1fr;
   }
+}
+
+.txt{
+  font-weight: 700;
 }

@@ -26,7 +26,6 @@ const Trade = ({ setNotification }) => {
   const [sellQuantity, setSellQuantity] = useState("");
   const [sellPIN, setSellPIN] = useState("");
 
-  // ✅ BUY API
   const buyAsset = async () => {
     try {
       if (!quantity || quantity <= 0) {
@@ -156,7 +155,6 @@ const Trade = ({ setNotification }) => {
     }
   };
 
-  // ✅ POLLING (no global loading here → avoids flicker)
   useEffect(() => {
     fetchPortfolio();
 
@@ -242,7 +240,7 @@ const Trade = ({ setNotification }) => {
     </div>
   ) : (
     portfolio?.holdings?.map((item) => (
-      <div key={item._id} className="holding">
+      <div key={item._id} className="holding center">
         <div className="top">
           <h3>{item.asset}</h3>
           <span

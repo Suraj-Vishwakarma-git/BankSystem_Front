@@ -48,11 +48,14 @@ body {
   padding: 18px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.05);
   transition: 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.card:hover {
+/* .card:hover {
   transform: translateY(-3px);
-}
+} */
 
 /* ================= SUMMARY ================= */
 .summary {
@@ -63,6 +66,7 @@ body {
   gap: 10px;
   margin: 20px 0;
   flex-wrap: wrap;
+  
 }
 
 .summary .card {
@@ -72,6 +76,9 @@ body {
 
 .card.big {
   background: #f8f9fa;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ================= MAIN WRAPPER ================= */
@@ -89,6 +96,7 @@ body {
   width: 50%;
   gap: 30px;
   flex-wrap: wrap;
+  
 }
 
 .charts .card {
@@ -151,10 +159,16 @@ body {
 
 .profit {
   color: #16a34a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .loss {
   color: #dc2626;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ===================================================== */
@@ -310,13 +324,13 @@ body {
 }
 
 /* HOVER */
-.trade-card.buy button:hover {
+/* .trade-card.buy button:hover {
   background: #15803d;
 }
 
 .trade-card.sell button:hover {
   background: #b91c1c;
-}
+} */
 .buySell{
   display: flex;
   gap:10px;
@@ -337,11 +351,14 @@ body {
 
   /* HOLDINGS FULL WIDTH */
   .buySell .holdings {
+    align-items: center;
     width: 100%;
   }
 
   /* BUY + SELL CARDS STACK */
   .BuyAndSell {
+    display: flex;
+    align-items: center;
     flex-direction: column;
     width: 100%;
   }
@@ -401,3 +418,123 @@ body {
 .Link{
   text-decoration:none;
 }
+
+*,
+*::before,
+*::after {
+  transition: none !important;
+}
+
+*:hover {
+  transform: none !important;
+}
+.card,
+.holding,
+.trade-card {
+  transition: none;
+}
+
+*,
+*::before,
+*::after {
+  box-shadow: none !important;
+  transition: none !important;
+}
+
+*:hover {
+  transform: none !important;
+}
+
+.card{
+  border: 1px solid rgb(237, 233, 233);
+}
+
+.holding{
+ border: 1px solid rgb(237, 233, 233);
+  background-color: #f9f9f9;
+}
+
+/* ================= GLOBAL FIX ================= */
+.card h2,
+.card h3 {
+  font-weight: 600;
+  letter-spacing: 0.3px;
+
+  /* FIX OVERFLOW */
+  white-space: normal;        /* allow wrap */
+  word-break: break-word;     /* break long numbers */
+  overflow-wrap: anywhere;    /* prevent overflow */
+}
+
+/* ================= BIG MONEY FIX ================= */
+.card.big h2 {
+  font-size: clamp(20px, 2.2vw, 28px);
+  font-weight: 700;
+}
+
+/* ================= NORMAL CARDS ================= */
+.card h3 {
+  font-size: clamp(16px, 1.5vw, 20px);
+}
+
+/* ================= REMOVE BAD ELLIPSIS ================= */
+.card,
+.profit,
+.loss {
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+}
+
+/* ================= HOLDING FIX ================= */
+.holding h3 {
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* ================= GRID IMPROVEMENT ================= */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+/* ================= SUMMARY FIX ================= */
+/* .summary {
+  align-items: stretch;
+} */
+
+.summary .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ================= BETTER VISUAL BALANCE ================= */
+.card.big {
+  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+}
+
+/* ================= OPTIONAL: CLEAN MONEY LOOK ================= */
+.card h2 span,
+.card h3 span {
+  font-size: 0.8em;
+  color: #6b7280;
+  margin-right: 4px;
+}
+
+/* ================= REMOVE GLOBAL KILLERS (IMPORTANT) ================= */
+/* YOU HAD THIS ↓ WHICH BREAKS UI */
+*,
+*::before,
+*::after {
+  box-shadow: none !important;
+  transition: none !important;
+}
+
+/* REMOVE THIS COMPLETELY ❌ */
+/*
+*:hover {
+  transform: none !important;
+}
+*/

@@ -122,8 +122,8 @@ const Setting = () => {
 
               <div className="stg-row">
                 <span className="stg-label">Account Number</span>
-                <span className="stg-value">
-                  •••• {accNo ? accNo.slice(-4) : "0000"}
+                <span className="stg-value txt">
+                  {accNo}
                 </span>
               </div>
 
@@ -134,7 +134,7 @@ const Setting = () => {
                     data?.status === "ACTIVE"
                       ? "stg-status-active"
                       : "stg-status-inactive"
-                  }`}
+                  } txt` }
                 >
                   {data?.status || "Active"}
                 </span>
@@ -142,7 +142,7 @@ const Setting = () => {
 
               <div className="stg-row">
                 <span className="stg-label">Created On</span>
-                <span className="stg-value">
+                <span className="stg-value txt">
                   {data?.createdAt
                     ? new Date(data.createdAt).toLocaleDateString()
                     : "-"}
@@ -214,16 +214,7 @@ const Setting = () => {
             </div>
          
           </div>
-   <div className="card">
-          <p>P&L</p>
-          <h3
-             className={
-             (portfolio?.totalProfitLoss || 0) >= 0 ? "profit" : "loss"
-             }
-                  >
-              ₹ {portfolio?.totalProfitLoss?.toLocaleString() || 0}
-           </h3>
-        </div>
+
           {/* OPTIONS */}
           <div className="stg-options">
             <div className="stg-option-card">🔐 Change PIN</div>
