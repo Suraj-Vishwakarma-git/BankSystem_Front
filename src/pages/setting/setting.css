@@ -1,4 +1,3 @@
-
 .stg-root {
   min-height: 100vh;
   background: #f9fafb;
@@ -8,11 +7,11 @@
 
 .stg-main {
   display: grid;
-  grid-template-columns: 320px 1fr;
-  gap: 20px;
+  grid-template-columns: 300px 1fr;
+  gap: 24px;
 
-  padding: 20px;
-  max-width: 1200px;
+  padding: 24px;
+  max-width: 1300px;
   margin: auto;
 }
 
@@ -32,6 +31,8 @@
 
   position: sticky;
   top: 90px;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
 }
 
 /* HEADER */
@@ -72,10 +73,11 @@
 /* ================= BALANCE ================= */
 
 .stg-balance-box {
-  padding: 14px;
+  padding: 16px;
   border-radius: 12px;
-  background: #f3f4f6;
+  background: linear-gradient(135deg, #eef2ff, #f3f4f6);
   margin-bottom: 18px;
+  border: 1px solid #e0e7ff;
 }
 
 .stg-balance-top {
@@ -85,14 +87,15 @@
   color: #6b7280;
 }
 
+/* ✅ FIXED BIG MONEY ISSUE */
 .stg-balance-amount {
-  font-size: 16px;
+  font-size: clamp(18px, 2vw, 24px);
   font-weight: 700;
   margin-top: 6px;
-    white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .stg-toggle-btn {
@@ -153,9 +156,9 @@
 /* ================= RIGHT SIDE ================= */
 
 .stg-right {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 /* ================= ASSETS ================= */
@@ -165,21 +168,32 @@
   border-radius: 14px;
   border: 1px solid #e5e7eb;
   background: #ffffff;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
 }
 
-/* PORTFOLIO GRID */
+/* ✅ FIX GRID (IMPORTANT) */
 .stg-grid {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
   width: 100%;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 12px;
 }
 
+/* HOLDING CARD */
 .stg-holding {
-  padding: 12px;
+  padding: 14px;
   border-radius: 12px;
   border: 1px solid #eee;
-  background: #fafafa;
+  background: #ffffff;
+
+  transition: 0.2s ease;
+}
+
+/* HOVER EFFECT */
+.stg-holding:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08);
 }
 
 .stg-holding-empty {
@@ -187,21 +201,26 @@
   grid-column: 1 / -1;
 }
 
+/* TOP */
 .stg-holding-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
+/* INFO */
 .stg-holding-info {
   font-size: 12px;
   color: #555;
   margin-top: 6px;
 }
 
+/* BOTTOM */
 .stg-holding-bottom {
   margin-top: 8px;
   font-size: 14px;
+
+  word-break: break-word;
 }
 
 /* PROFIT LOSS */
@@ -218,18 +237,29 @@
 .stg-options {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  gap: 16px;
 }
 
 .stg-option-card {
-  padding: 16px;
+  padding: 18px;
   border-radius: 12px;
   border: 1px solid #e5e7eb;
   background: #ffffff;
 
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: 0.2s ease;
+}
+
+.stg-option-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08);
 }
 
 /* ================= MOBILE ================= */
@@ -248,6 +278,246 @@
   }
 }
 
-.txt{
+/* ================= TEXT ================= */
+
+.txt {
   font-weight: 700;
+}
+
+.value{
+  font-weight:bolder;
+}
+
+.cold{
+  font-size: medium;
+  font-weight: 700;
+}
+
+/* ================= OPTIONS GRID ================= */
+.stg-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+/* ================= CARD ================= */
+.stg-option-card {
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  position: relative;
+  overflow: hidden;
+}
+
+/* ================= LEFT SIDE ================= */
+.opt-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ICON */
+.opt-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+
+  background: #f3f4f6;
+}
+
+/* TEXT */
+.opt-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* ARROW */
+.opt-arrow {
+  font-size: 16px;
+  color: #9ca3af;
+  transition: 0.2s ease;
+}
+
+/* ================= HOVER EFFECT ================= */
+.stg-option-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+  border-color: #c7d2fe;
+}
+
+/* icon glow */
+.stg-option-card:hover .opt-icon {
+  background: #e0e7ff;
+}
+
+/* arrow move */
+.stg-option-card:hover .opt-arrow {
+  transform: translateX(4px);
+  color: #4f46e5;
+}
+
+/* ================= ACTIVE CLICK ================= */
+.stg-option-card:active {
+  transform: scale(0.97);
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+  .stg-options {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ================= WRAPPER ================= */
+.transactions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* ================= CARD ================= */
+.txn-card {
+  padding: 16px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* ================= LEFT ================= */
+.txn-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ICON */
+.txn-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+  background: #f3f4f6;
+}
+
+/* TEXT */
+.txn-left h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.txn-left p {
+  margin: 0;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* ARROW */
+.txn-arrow {
+  font-size: 16px;
+  color: #9ca3af;
+  transition: 0.2s ease;
+}
+
+/* ================= HOVER ================= */
+.txn-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+  border-color: #c7d2fe;
+}
+
+.txn-card:hover .txn-icon {
+  background: #e0e7ff;
+}
+
+.txn-card:hover .txn-arrow {
+  transform: translateX(4px);
+  color: #4f46e5;
+}
+
+/* ================= ACTIVE ================= */
+.txn-card:active {
+  transform: scale(0.97);
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+  .transactions {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+.logout-btn {
+  margin-top: 16px;
+  padding: 12px 14px;
+  width: 60%;
+  border-radius: 12px;
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+
+  color: #dc2626;
+  font-weight: 600;
+  font-size: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* hover */
+.logout-btn:hover {
+  background: #fecaca;
+  transform: translateY(-2px);
+}
+
+.logout{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 50px;
+  width: 100%;
+}
+
+/* click */
+.logout-btn:active {
+  transform: scale(0.96);
+}
+
+/* icon */
+.logout-icon {
+  font-size: 16px;
 }

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../../components/common/Header";
 import "./setting.css";
 import { useLoading } from "../../context/LoadingContext.jsx";
+import { Link } from "react-router-dom";
 
 const Setting = () => {
   const [name, setName] = useState("");
@@ -190,9 +191,9 @@ const Setting = () => {
                     </div>
 
                     <div className="stg-holding-info">
-                      <p>Qty: {item.totalQuantity}</p>
-                      <p>Avg: ₹ {item.avgPrice.toFixed(2)}</p>
-                      <p>LTP: ₹ {item.currentPrice.toFixed(2)}</p>
+                      <p className="value">Qty: {item.totalQuantity}</p>
+                      <p className="value">Avg: ₹ {item.avgPrice.toFixed(2)}</p>
+                      <p className="value">LTP: ₹ {item.currentPrice.toFixed(2)}</p>
                     </div>
 
                     <div className="stg-holding-bottom">
@@ -216,16 +217,97 @@ const Setting = () => {
           </div>
 
           {/* OPTIONS */}
-          <div className="stg-options">
-            <div className="stg-option-card">🔐 Change PIN</div>
-            <div className="stg-option-card">💸 Request Money</div>
-            <div className="stg-option-card">⚙️ Set PIN</div>
-            <div className="stg-option-card">📄 Support</div>
-          </div>
+         <div className="stg-options">
+  <Link to="/changepin" className="Link">
+  <div className="stg-option-card">
+  
+    <div className="opt-left">
+     
+      <span className="opt-icon">🔐</span>
+      <span className="opt-text">Change PIN</span>
+      
+    </div>
+       <span className="opt-arrow">→</span>
+  </div>
+  </Link>
+  
+  <Link to="/changepin" className="Link">
+
+  <div className="stg-option-card">
+    <div className="opt-left">
+      <span className="opt-icon">💸</span>
+      <span className="opt-text">Request Money</span>
+    </div>
+    <span className="opt-arrow">→</span>
+  </div>
+   </Link>
+
+  <Link to="/home" className="Link">
+
+  <div className="stg-option-card">
+    <div className="opt-left">
+      <span className="opt-icon">⚙️</span>
+      <span className="opt-text">Set PIN</span>
+    </div>
+    <span className="opt-arrow">→</span>
+  </div>
+   </Link>
+
+  <Link to="/home" className="Link">
+
+  <div className="stg-option-card">
+    <div className="opt-left">
+      <span className="opt-icon">📄</span>
+      <span className="opt-text">Support</span>
+    </div>
+    <span className="opt-arrow">→</span>
+  </div>
+   </Link>
+</div>
+
+
+ 
+
+<div className="transactions">
+  <Link to="/stockhistory" className="Link">
+  <div className="txn-card">
+    <div className="txn-left">
+      <span className="txn-icon">📊</span>
+      <div>
+        <h4>Your Transactions</h4>
+        <p>View all activity</p>
+      </div>
+    </div>
+    <span className="txn-arrow">→</span>
+  </div>
+  </Link>
+  
+
+  <Link to="/home" className="Link">
+
+  <div className="txn-card">
+    <div className="txn-left">
+      <span className="txn-icon">🔒</span>
+      <div>
+        <h4>Secure Account</h4>
+        <p>Manage security settings</p>
+      </div>
+    </div>
+    <span className="txn-arrow">→</span>
+  </div>
+  </Link>
+
+</div>
 
         </div>
-
       </div>
+ <div className="logout">
+    <div className="logout-btn">
+    
+  <span className="logout-icon">⏻</span>
+  <span>Log Out</span>
+  </div>
+</div>
     </div>
   );
 };
