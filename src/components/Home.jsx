@@ -387,6 +387,11 @@ async function authentification() {
                 <h3>Change Account PIN</h3>
               </div>
               </Link>
+              <Link className='Link' to="/setting">
+              <div className="cardItem changepin">
+                <h3>Setting</h3>
+              </div>
+              </Link>
             </div>
                
           </div>

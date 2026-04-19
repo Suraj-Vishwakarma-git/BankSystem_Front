@@ -304,7 +304,7 @@ const Setting = () => {
  <div className="logout">
     <div className="logout-btn">
     
-  <span className="logout-icon">⏻</span>
+  {/* <span className="logout-icon">⏻</span> */}
   <span>Log Out</span>
   </div>
 </div>
