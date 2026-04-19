@@ -124,7 +124,7 @@ async function authentification() {
     setreceivedMoney(data.creditAmt);
     console.log(data);
 
-    setLoading(false); // ✅ always safe
+    setLoading(false);
   }
   useEffect(()=>{
     accData()
@@ -151,33 +151,44 @@ async function authentification() {
 
         <nav className="sidebarNav">
           <span className="navLabel">Main</span>
-
+     
+          <Link className='Link' to="/home">
           <div
             className={`navItem ${activeNav === 'dashboard' ? 'navItemActive' : ''}`}
             onClick={() => setActiveNav('dashboard')}
           >
             <span className="navIcon">⊞</span> Dashboard
           </div>
+          </Link>
 
+          <Link className='Link' to="/trade">
           <div
             className={`navItem ${activeNav === 'transfers' ? 'navItemActive' : ''}`}
             onClick={() => setActiveNav('transfers')}
           >
             <span className="navIcon">◎</span> Portfolio
           </div>
+          </Link>
+           
 
+           <Link className='Link' to="/stockhistory">
           <div
             className={`navItem ${activeNav === 'history' ? 'navItemActive' : ''}`}
             onClick={() => setActiveNav('history')}
           >
+            
             <span className="navIcon">↺</span> History
           </div>
+          </Link>
+          <Link className='Link' to="/trade">
           <div
             className={`navItem ${activeNav === 'trade' ? 'navItemActive' : ''}`}
             onClick={() => setActiveNav('trade')}
           >
             <span className="navIcon">⇄</span> Trade
           </div>
+        </Link>
+
 
           <span className="navLabel" style={{ marginTop: '16px' }}>Account</span>
 
@@ -187,13 +198,15 @@ async function authentification() {
           >
             <span className="navIcon">🔒</span> Security &amp; PIN
           </div>
-
+          
+          <Link className='Link' to="/setting">
           <div
             className={`navItem ${activeNav === 'settings' ? 'navItemActive' : ''}`}
             onClick={() => setActiveNav('settings')}
           >
             <span className="navIcon">⚙</span> Settings
           </div>
+          </Link>
         </nav>
 
         <div className="sidebarFooter">

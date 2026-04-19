@@ -49,13 +49,18 @@ body {
 /* ── Main Layout ─────────────────────────────────────────── */
 .MainTransactionFile {
   display: grid;
-  grid-template-columns: 420px 1fr;
+  grid-template-columns: minmax(280px, 420px) 1fr;
   grid-template-areas: "transfer history";
   align-items: stretch;
   gap: 20px;
   padding: 24px 28px;
   min-height: calc(100vh - 64px);
   background: var(--bg);
+}
+
+.transaction-card {
+  width: 100% !important;
+  min-width: 0;
 }
 
 /* ── Transfer Box ────────────────────────────────────────── */
@@ -692,6 +697,7 @@ body {
   min-width: 0;            /* shrinks so amount side is never squeezed */
   flex: 1;
   overflow: hidden;
+  
 }
 
 .tx-icon {
@@ -863,4 +869,26 @@ body {
   .success-amount {
     font-size: 28px;
   }
+}
+
+.transactions {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px;
+}
+.transaction-card {
+  width: 100% !important;
+  min-width: 0;
+}
+
+.transactionHistoryBox * {
+  max-width: 100%;
+}
+
+.transactionHistoryBox {
+  overflow: hidden;
+}
+
+.transactions-section {
+  width: 100%;
 }
