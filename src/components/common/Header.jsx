@@ -18,6 +18,11 @@ const Header = ({setispinExits}) => {
   }
   const {setLoading}=useLoading();
 
+  if(!localStorage.getItem("token")){
+    sessionStorage.clear();
+    navigate("/");
+  }
+
 
  async function accDetails() {
   setLoading(true);

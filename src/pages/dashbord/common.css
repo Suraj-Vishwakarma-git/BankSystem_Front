@@ -369,3 +369,72 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+
+/* 🔥 Subtitle */
+.modal-subtitle {
+  font-size: 14px;
+  color: #666;
+  font-family: "Poppins", sans-serif;
+  margin: 5px 0 10px;
+}
+
+/* 🔥 Input styling upgrade */
+.modal-user-name input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.modal-user-name input::placeholder {
+  color: #888;
+}
+
+/* 🔥 Button upgrade */
+.modal-confirm-btn {
+  width: 250px;
+  background: linear-gradient(135deg, #00c2a8, #00a896);
+  color: white;
+}
+
+.modal-confirm-btn:hover {
+  background: linear-gradient(135deg, #009e8a, #008f7a);
+}
+
+/* 🔥 Cancel Button (secondary action) */
+.modal-cancle-btn {
+  height: 38px;
+  min-width: 100px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.9rem;
+
+  color: #6b7280; /* soft gray */
+  background: rgba(0, 0, 0, 0.04);
+
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+  will-change: transform;
+}
+
+/* 🔥 Hover effect */
+.modal-cancle-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: #374151;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* 🔥 Active (click) */
+.modal-cancle-btn:active {
+  transform: scale(0.96);
+  box-shadow: none;
+}

@@ -70,6 +70,68 @@ const Dashboard = ({ setNotification }) => {
   const [email, setEmail]       = useState("");
   const [newAccountName, setNewAccountName]     = useState("");
   const [newAccountEmail, setNewAccountEmail]   = useState("");
+  const [ChangePassWord,setChangePassWord]=useState(false);
+  const [passemail,setpassemail]=useState("");
+  const [step,setStep]=useState(1);
+
+
+ const sendOtp = async () => {
+  try {
+    setLoading(true);
+
+    // ❗ basic validation
+    if (!passemail) {
+      setNotification({ msg: "Email is required", type: "error" });
+      return;
+    }
+
+    // ⏳ timeout protection (8s)
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+
+    const response = await fetch("http://localhost:3000/api/auth/sendotp", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email:passemail }),
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeout);
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Something went wrong");
+    }
+
+    // ✅ success
+    setNotification({
+      msg: data.message || "OTP sent successfully",
+      type: "success",
+    });
+
+    // 👉 move to next step (important UX)
+    setStep(2);
+
+  } catch (err) {
+    console.log("Send OTP Error:", err);
+
+    let message = "Server error, try again";
+
+    if (err.name === "AbortError") {
+      message = "Request timed out, try again";
+    } else if (err.message) {
+      message = err.message;
+    }
+
+    setNotification({ msg: message, type: "error" });
+
+  } finally {
+    setLoading(false);
+  }
+};
 
   async function handleSignup() {
     try {
@@ -217,6 +279,100 @@ async function handleLogin() {
           )}
         </AnimatePresence>
 
+
+
+      {/* {Change Password} */}
+   <AnimatePresence>
+  {ChangePassWord && (
+    <motion.div
+      className="modal-overlay"
+      variants={modalOverlay}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
+      <motion.div
+        className="modal-card"
+        variants={modalCard}
+      >
+
+        {/* 🔷 Branding */}
+        <div className="modal-brand">
+          <span>ApexTrust</span>
+          <img src={logo} className="modal-logo" />
+        </div>
+
+        {/* 🔹 STEP 1: EMAIL */}
+        {step === 1 && (
+          <>
+            <p className="modal-subtitle">Reset your password</p>
+
+            <div className="modal-user-name">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                onChange={(e) => setpassemail(e.target.value)}
+              />
+            </div>
+
+            <button
+              className="modal-confirm-btn"
+              onClick={() => {
+                sendOtp();
+              }}
+            >
+              Send OTP
+            </button>
+            <button
+              className="modal-cancle-btn"
+              onClick={() => {
+                setChangePassWord(false);
+              }}
+            >
+              Cancle 
+            </button>
+          </>
+        )}
+
+        {/* 🔹 STEP 2: OTP + PASSWORD */}
+        {step === 2 && (
+          <>
+            <p className="modal-subtitle">Enter OTP & new password</p>
+
+            <div className="modal-user-name">
+              <input type="text" placeholder="Enter OTP" />
+            </div>
+
+            <div className="modal-user-name">
+              <input type="password" placeholder="New Password" />
+            </div>
+
+            <button
+              className="modal-confirm-btn"
+              onClick={() => {
+                // call verify + change password API
+              }}
+            >
+              Update Password
+            </button>
+            <button
+              className="modal-cancle-btn"
+              onClick={() => {
+                setChangePassWord(false);
+              }}
+            >
+              Cancle 
+            </button>
+          </>
+        )}
+
+      </motion.div>
+    </motion.div>
+  )}
+</AnimatePresence>
+
+
+
         {/* ── Hero / Left ── */}
         <motion.div className="hero-panel" variants={slideLeft} initial="hidden" animate="visible">
           <motion.div className="hero-text" variants={staggerContainer} initial="hidden" animate="visible">
@@ -336,6 +492,7 @@ async function handleLogin() {
                           className="btn-ghost"
                           whileHover={{ scale: 1.04, transition: { duration: 0.16 } }}
                           whileTap={{ scale: 0.94 }}
+                          onClick={()=>setChangePassWord(true)}
                         >
                           Forgot Password?
                         </motion.button>
