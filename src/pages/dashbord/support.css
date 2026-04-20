@@ -1,0 +1,420 @@
+/* =============================================
+   APEX TRUST — SUPPORT PAGE
+   Theme: Clean & Professional | White BG
+   Font: DM Sans (display) + DM Mono (labels)
+============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── ROOT VARIABLES ── */
+:root {
+  --bg:          #ffffff;
+  --surface:     #f8f8f6;
+  --surface-2:   #f0f0ec;
+  --border:      #e4e4de;
+  --text-primary:#111110;
+  --text-secondary:#6b6b66;
+  --text-muted:  #9a9a94;
+  --accent:      #1a1a18;
+  --accent-alt:  #54aeed;
+  --success:     #06ff72;
+  --radius-sm:   8px;
+  --radius-md:   14px;
+  --radius-lg:   20px;
+  --shadow-sm:   0 1px 4px rgba(0,0,0,0.06);
+  --shadow-md:   0 4px 20px rgba(0,0,0,0.08);
+  --shadow-lg:   0 12px 48px rgba(0,0,0,0.10);
+  --font:        'DM Sans', sans-serif;
+  --font-mono:   'DM Mono', monospace;
+}
+
+/* ── BASE ── */
+.sp-root {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+/* ── HERO ── */
+.sp-hero {
+  text-align: center;
+  padding: 72px 24px 56px;
+  border-bottom: 1px solid var(--border);
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(212,168,83,0.06) 0%, transparent 70%),
+    var(--bg);
+}
+
+.sp-hero-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 6px 16px;
+  margin-bottom: 24px;
+}
+
+.sp-hero-title {
+  font-size: clamp(32px, 5vw, 54px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.sp-accent {
+  color: var(--accent-alt);
+}
+
+.sp-hero-sub {
+  font-size: 17px;
+  color: var(--text-secondary);
+  font-weight: 400;
+  max-width: 440px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ── MAIN GRID ── */
+.sp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  max-width: 1080px;
+  margin: 48px auto 0;
+  padding: 0 24px;
+}
+
+@media (max-width: 800px) {
+  .sp-grid { grid-template-columns: 1fr; }
+}
+
+/* ── CARD ── */
+.sp-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 36px;
+  box-shadow: var(--shadow-md);
+  transition: box-shadow 0.25s ease;
+}
+
+.sp-card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.sp-card-tag {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #00c6ff;
+  margin-bottom: 10px;
+}
+
+.sp-card-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+}
+
+.sp-card-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+
+/* ── FORM ── */
+.sp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.sp-field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 520px) {
+  .sp-field-row { grid-template-columns: 1fr; }
+}
+
+.sp-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sp-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.sp-input {
+  width: 100%;
+  padding: 11px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font);
+  font-size: 14.5px;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.sp-input::placeholder { color: var(--text-muted); }
+
+.sp-input:focus {
+  border-color: var(--accent);
+  background: var(--bg);
+  box-shadow: 0 0 0 3px rgba(26,26,24,0.07);
+}
+
+.sp-select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239a9a94' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+.sp-textarea {
+  resize: vertical;
+  min-height: 110px;
+  line-height: 1.6;
+}
+
+/* ── SUBMIT BUTTON ── */
+.sp-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 13px 24px;
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: -0.01em;
+  transition: background 0.18s ease, transform 0.15s ease, box-shadow 0.18s ease;
+  width: 100%;
+}
+
+.sp-btn:hover {
+  background: #2d2d2a;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(26,26,24,0.20);
+}
+
+.sp-btn:active {
+  transform: translateY(0);
+}
+
+/* ── SUCCESS STATE ── */
+.sp-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 56px 24px;
+  animation: sp-fade-in 0.4s ease;
+}
+
+.sp-success-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #e8f5ef;
+  color: var(--success);
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.sp-success-text {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-align: center;
+}
+
+/* ── FAQ ── */
+.sp-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sp-faq-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease;
+}
+
+.sp-faq-item:hover,
+.sp-faq-open {
+  background: var(--surface-2);
+  border-color: #d4d4ce;
+}
+
+.sp-faq-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 16px;
+  user-select: none;
+}
+
+.sp-faq-icon {
+  font-size: 17px;
+  flex-shrink: 0;
+  width: 28px;
+  text-align: center;
+}
+
+.sp-faq-question {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.sp-faq-chevron {
+  font-size: 20px;
+  color: var(--text-muted);
+  font-weight: 300;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: color 0.15s ease;
+}
+
+.sp-faq-open .sp-faq-chevron {
+  color: rgb(36, 219, 255);
+}
+
+.sp-faq-answer {
+  padding: 0 16px 16px 56px;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  animation: sp-fade-in 0.22s ease;
+}
+
+/* ── CONTACT STRIP ── */
+.sp-contact {
+  max-width: 1080px;
+  margin: 40px auto 0;
+  padding: 0 24px;
+}
+
+.sp-contact-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.sp-contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .sp-contact-grid { grid-template-columns: 1fr; }
+}
+
+.sp-contact-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.sp-contact-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.sp-contact-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.sp-contact-name {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  margin-bottom: 4px;
+}
+
+.sp-contact-value {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 3px;
+}
+
+.sp-contact-sub {
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes sp-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.sp-hero    { animation: sp-fade-in 0.45s ease both; }
+.sp-card    { animation: sp-fade-in 0.5s ease both; }
+.sp-form-card { animation-delay: 0.05s; }
+.sp-faq-card  { animation-delay: 0.10s; }
+.sp-contact   { animation: sp-fade-in 0.55s 0.15s ease both; }

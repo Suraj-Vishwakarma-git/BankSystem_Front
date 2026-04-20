@@ -11,6 +11,7 @@ import { useLoading } from './context/LoadingContext.jsx';
 import ChangeAccPIN from './pages/transaction/ChangeAccPIN.jsx';
 import Setting from './pages/setting/setting.jsx';
 import Stock from './pages/StockMarket/StockHistory.jsx';
+import Support from './pages/dashbord/support.jsx';
 function App() {
   const [notification,setNotification]=useState(null);
   const { loading} = useLoading();
@@ -37,6 +38,7 @@ function App() {
         <Route path='/changepin' element={< ChangeAccPIN setNotification={setNotification}  />} />
         <Route path='/trade' element={< Trade setNotification={setNotification} />}/>
         <Route path="/stockhistory" element={<Stock setNotification={setNotification} />}/>
+        <Route path='/support' element={<Support/>}/>
       </Routes>
     </BrowserRouter>
   );

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/common/Header";
 import "./setting.css";
+import { useNavigate } from "react-router-dom";
 import { useLoading } from "../../context/LoadingContext.jsx";
 import { Link } from "react-router-dom";
 
@@ -14,6 +15,16 @@ const Setting = () => {
   const [portfolio, setPortfolio] = useState(null);
   const { setLoading } = useLoading();
   const [loading, setLocalLoading] = useState(true);
+
+
+   function handleLogout(){
+    setLoading(true);
+    localStorage.removeItem("token");
+    sessionStorage.clear();
+    setLoading(false);
+    navigate("/");
+   
+  }
 
   async function accDetails() {
     try {
@@ -152,7 +163,7 @@ const Setting = () => {
 
             </div>
 
-            <button className="stg-btn">
+            <button className="stg-btn" onClick={handleLogout}>
               Change Password
             </button>
 
@@ -253,7 +264,7 @@ const Setting = () => {
   </div>
    </Link>
 
-  <Link to="/home" className="Link">
+  <Link to="/support" className="Link">
 
   <div className="stg-option-card">
     <div className="opt-left">
@@ -283,30 +294,17 @@ const Setting = () => {
   </Link>
   
 
-  <Link to="/home" className="Link">
-
-  <div className="txn-card">
-    <div className="txn-left">
-      <span className="txn-icon">🔒</span>
-      <div>
-        <h4>Secure Account</h4>
-        <p>Manage security settings</p>
-      </div>
-    </div>
-    <span className="txn-arrow">→</span>
-  </div>
-  </Link>
+  
 
 </div>
 
         </div>
       </div>
- <div className="logout">
-    <div className="logout-btn">
-    
-  {/* <span className="logout-icon">⏻</span> */}
-  <span>Log Out</span>
-  </div>
+ <div className="logout" >
+    <button className="logout-btn" onClick={handleLogout} >
+      
+      <span>Log Out</span>
+  </button>
 </div>
     </div>
   );

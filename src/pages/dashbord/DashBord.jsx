@@ -72,20 +72,22 @@ const Dashboard = ({ setNotification }) => {
   const [newAccountEmail, setNewAccountEmail]   = useState("");
   const [ChangePassWord,setChangePassWord]=useState(false);
   const [passemail,setpassemail]=useState("");
+  const [newPass, setNewPass] = useState("");
   const [step,setStep]=useState(1);
+  const [otp,setOtp]=useState("");
+  
 
-
- const sendOtp = async () => {
+const sendOtp = async () => {
   try {
     setLoading(true);
 
-    // ❗ basic validation
-    if (!passemail) {
-      setNotification({ msg: "Email is required", type: "error" });
+    // validation
+    if (!passemail || !passemail.includes("@")) {
+      setNotification({ msg: "Enter a valid email", type: "error" });
+      setLoading(false);
       return;
     }
 
-    // ⏳ timeout protection (8s)
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 8000);
 
@@ -94,25 +96,28 @@ const Dashboard = ({ setNotification }) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email:passemail }),
+      body: JSON.stringify({ email: passemail.trim() }),
       signal: controller.signal,
     });
 
     clearTimeout(timeout);
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.message || "Something went wrong");
+    let data;
+    try {
+      data = await response.json();
+    } catch {
+      throw new Error("Invalid server response");
     }
 
-    // ✅ success
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to send OTP");
+    }
+
     setNotification({
       msg: data.message || "OTP sent successfully",
       type: "success",
     });
 
-    // 👉 move to next step (important UX)
     setStep(2);
 
   } catch (err) {
@@ -121,7 +126,7 @@ const Dashboard = ({ setNotification }) => {
     let message = "Server error, try again";
 
     if (err.name === "AbortError") {
-      message = "Request timed out, try again";
+      message = "Request timed out";
     } else if (err.message) {
       message = err.message;
     }
@@ -133,7 +138,139 @@ const Dashboard = ({ setNotification }) => {
   }
 };
 
-  async function handleSignup() {
+async function verifyOtp() {
+  setLoading(true);
+
+  try {
+    if (!otp || otp.length !== 6) {
+      setNotification({ msg: "Enter valid 6-digit OTP", type: "error" });
+       setLoading(false); 
+      return;
+    }
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+
+    const API = await fetch("http://localhost:3000/api/auth/verifyotp", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: passemail.trim(),
+        userOTP: otp.trim(),
+      }),
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeout);
+
+    let data;
+    try {
+      data = await API.json();
+    } catch {
+      throw new Error("Invalid server response");
+    }
+
+    if (!API.ok) {
+      throw new Error(data.message || "OTP verification failed");
+    }
+
+    setNotification({ msg: "OTP Verified", type: "success" });
+
+    // store token temporarily
+    localStorage.setItem("otpverify", data.resetToken);
+
+    // 👉 move to next step
+    setStep(3);
+
+  } catch (e) {
+    console.log("Verify OTP Error:", e);
+
+    let message = "Server error";
+
+    if (e.name === "AbortError") {
+      message = "Request timed out";
+    } else if (e.message) {
+      message = e.message;
+    }
+
+    setNotification({ msg: message, type: "error" });
+
+  } finally {
+    setLoading(false);
+  }
+}
+
+async function ChangePass() {
+  setLoading(true);
+
+  try {
+    const token = localStorage.getItem("otpverify");
+
+    if (!token) {
+      setNotification({ msg: "OTP not verified", type: "error" });
+      setLoading(false);
+      return;
+    }
+
+    if (!newPass || newPass.length < 6) {
+      setNotification({
+        msg: "Password must be at least 6 characters",
+        type: "error",
+      });
+      setLoading(false);
+      return;
+    }
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+
+    const API = await fetch("http://localhost:3000/api/auth/changepass", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        newPass: newPass.trim(),
+        token:token,
+      }),
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeout);
+
+    const data = await API.json();
+
+    if (!API.ok) {
+      throw new Error(data.message || "Password update failed");
+    }
+
+    setNotification({
+      msg: data.message || "Password updated successfully",
+      type: "success",
+    });
+
+    localStorage.removeItem("otpverify");
+    setOtp("");
+    setNewPass("");
+    setStep(1);
+    setChangePassWord(false);
+
+  } catch (e) {
+    console.log("Change Password Error:", e);
+
+    setNotification({
+      msg: e.message || "Server error",
+      type: "error",
+    });
+
+  } finally {
+    setLoading(false);
+  }
+}
+
+async function handleSignup() {
     try {
       setLoading(true);
       const res  = await fetch("http://localhost:3000/api/auth/signup", {
@@ -303,67 +440,105 @@ async function handleLogin() {
         </div>
 
         {/* 🔹 STEP 1: EMAIL */}
-        {step === 1 && (
-          <>
-            <p className="modal-subtitle">Reset your password</p>
+       {step === 1 && (
+  <>
+    <p className="modal-subtitle">Reset your password</p>
 
-            <div className="modal-user-name">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                onChange={(e) => setpassemail(e.target.value)}
-              />
-            </div>
+    <div className="modal-user-name">
+      <input
+        type="email"
+        placeholder="Enter your email"
+        value={passemail}
+        onChange={(e) => setpassemail(e.target.value)}
+      />
+    </div>
 
-            <button
-              className="modal-confirm-btn"
-              onClick={() => {
-                sendOtp();
-              }}
-            >
-              Send OTP
-            </button>
-            <button
-              className="modal-cancle-btn"
-              onClick={() => {
-                setChangePassWord(false);
-              }}
-            >
-              Cancle 
-            </button>
-          </>
+    <button
+      className="modal-confirm-btn"
+      onClick={sendOtp}
+     
+    >
+      Send OTP
+    </button>
+
+    <button
+      className="modal-cancle-btn"
+      onClick={() => {
+        setChangePassWord(false);
+        setStep(1);
+        setpassemail("");
+      }}
+    >
+      Cancel
+    </button>
+  </>
         )}
+       {/* STEP 2 */}
+       {step === 2 && (
+  <>
+    <p className="modal-subtitle">Enter OTP</p>
 
-        {/* 🔹 STEP 2: OTP + PASSWORD */}
-        {step === 2 && (
-          <>
-            <p className="modal-subtitle">Enter OTP & new password</p>
+    <div className="modal-user-name">
+      <input
+        type="text"
+        placeholder="Enter OTP"
+        value={otp}
+        onChange={(e) => setOtp(e.target.value)}
+      />
+    </div>
 
-            <div className="modal-user-name">
-              <input type="text" placeholder="Enter OTP" />
-            </div>
+    <button
+      className="modal-confirm-btn"
+      onClick={verifyOtp}
+    >
+      Verify OTP
+    </button>
 
-            <div className="modal-user-name">
-              <input type="password" placeholder="New Password" />
-            </div>
+    <button
+      className="modal-cancle-btn"
+      onClick={() => {
+        setChangePassWord(false);
+        setStep(1);
+        setOtp("");
+      }}
+    >
+      Cancel
+    </button>
+  </>
+        )}
+        {/* STEP 3 */}
+       {step === 3 && (
+  <>
+    <p className="modal-subtitle">Set New Password</p>
 
-            <button
-              className="modal-confirm-btn"
-              onClick={() => {
-                // call verify + change password API
-              }}
-            >
-              Update Password
-            </button>
-            <button
-              className="modal-cancle-btn"
-              onClick={() => {
-                setChangePassWord(false);
-              }}
-            >
-              Cancle 
-            </button>
-          </>
+    <div className="modal-user-name">
+      <input
+        type="password"
+        placeholder="New Password"
+        value={newPass}
+        onChange={(e) => setNewPass(e.target.value)}
+      />
+    </div>
+
+    <button
+      className="modal-confirm-btn"
+      onClick={ChangePass}
+    >
+      Update Password
+    </button>
+
+    <button
+      className="modal-cancle-btn"
+      onClick={() => {
+        setChangePassWord(false);
+        setStep(1);
+        setNewPass("");
+        setOtp("");
+      }}
+    >
+      Cancel
+    </button>
+  </>
         )}
 
       </motion.div>
